@@ -29,6 +29,8 @@ apis:
       - type: Documentation
         url: https://docs.px4.io/
 common:
+  - type: DomainSecurity
+    url: security/dronecode-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/dronecode-foundation
   - type: Documentation
@@ -39,6 +41,8 @@ common:
     name: Dronecode Foundation GitHub
     description: Source code and repositories for Dronecode Foundation.
     url: https://github.com/PX4
+  - type: Blog
+    url: https://dronecode.org/feed/
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
