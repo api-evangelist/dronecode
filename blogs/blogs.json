@@ -1,0 +1,21 @@
+{
+  "repo": "dronecode",
+  "feeds": [
+    {
+      "source": "https://dronecode.org/feed/",
+      "feed_url": "https://dronecode.org/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://github.com/PX4",
+      "feed_url": "https://github.com/PX4",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 59
+}
