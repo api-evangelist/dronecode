@@ -3,9 +3,21 @@ name: Dronecode Foundation
 description: >-
   The Dronecode Foundation is a vendor-neutral Linux Foundation project for open source drone projects. It hosts PX4 autopilot flight control software and MAVLink communication protocol used worldwide for unmanned aerial vehicles, providing a complete open source platform for drone development.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/dronecode.png
 tags:
   - Drones
   - Linux Foundation
