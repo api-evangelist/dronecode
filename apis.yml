@@ -1,71 +1,312 @@
 aid: dronecode
 name: Dronecode Foundation
 description: >-
-  The Dronecode Foundation is a vendor-neutral Linux Foundation project for open source drone projects. It hosts PX4 autopilot flight control software and MAVLink communication protocol used worldwide for unmanned aerial vehicles, providing a complete open source platform for drone development.
+  The Dronecode Foundation is a vendor-neutral Linux Foundation collaborative project and the home of
+  the open source flight stack the drone industry runs on: PX4 Autopilot, the MAVLink communication
+  protocol, MAVSDK, QGroundControl and the Pixhawk hardware standards. Its machine-readable surface is
+  a gRPC one — MAVSDK-Proto publishes 38 protobuf services and 387 RPCs covering arming, takeoff,
+  missions, geofencing, telemetry, camera, gimbal and parameter control — alongside the MAVLink dialect
+  XML and the component-metadata JSON Schemas that define how vehicles describe themselves. Nothing is
+  hosted: the consumer runs mavsdk_server themselves, and every contract, SDK and firmware is free and
+  open source.
 type: Index
 deliveryModel:
-  model: unknown
-  open_source: false
+  model: self-hosted
+  license: BSD-3-Clause
+  open_source: true
   commercial: false
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  label: Self-hosted open source · you run it yourself
+  confidence: high
   source:
-  - none
-  generated: '2026-08-28'
-  method: derived
+    - license
+    - contract
+  generated: '2026-09-06'
+  method: searched
 accessModel:
-  pricing: freemium
-  onboarding: unknown
+  pricing: free
+  onboarding: self-service
   trial: false
-  try_now: false
-  public: false
-  label: Freemium
-  confidence: medium
+  try_now: true
+  public: true
+  label: Free and open source · no account, no key, no quota
+  confidence: high
   source:
-  - plans
-  generated: '2026-07-22'
-  method: derived
-position: Consuming
+    - plans
+    - license
+  generated: '2026-09-06'
+  method: searched
+position: Producing
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/dronecode.png
 tags:
   - Drones
-  - Linux Foundation
-  - Robotics
   - UAV
+  - Robotics
+  - MAVLink
+  - PX4
+  - Autopilot
+  - Aerial Robotics
+  - gRPC
+  - Open Source
+  - Linux Foundation
 created: '2026-03-16'
-modified: '2026-04-28'
+modified: '2026-09-06'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/dronecode/refs/heads/main/apis.yml
 specificationVersion: '0.23'
+x-baseurl-note: >-
+  Three API entries carry no baseURL on purpose. PX4 Autopilot and MAVLink are firmware and a wire
+  protocol; neither terminates a network endpoint, so there is no host to name and none was guessed.
+  MAVSDK has no baseURL for a different reason: its endpoint is grpc://{host}:50051 on a machine the
+  consumer runs themselves, and apis.json requires an http/https base, so recording one would either
+  fail the schema or misdescribe the transport. The real base is stated in grpc/_index.yml.
+x-contract-note: >-
+  Contract discovery 2026-09-06. No OpenAPI, Swagger, GraphQL, AsyncAPI or WSDL exists anywhere in
+  this estate, and probing for one is the wrong search — Dronecode's contract is gRPC. 39 .proto files
+  were fetched verbatim from github.com/mavlink/MAVSDK-Proto @ 4fbf5ce1 (38 services, 387 RPCs, 983
+  messages, 63 of them server-streaming) plus 5 MAVLink component-metadata JSON Schemas whose $id
+  resolves to mavlink.io. A prior round recorded this provider as publishing no contract at all.
 apis:
   - aid: dronecode:dronecode-api
-    name: Dronecode Foundation API
+    name: PX4 Autopilot
     description: >-
-      API for accessing Dronecode Foundation resources including PX4 autopilot documentation and MAVLink protocol specifications for drone development.
+      PX4 is the open source flight control firmware the Dronecode Foundation stewards — the software
+      running on the vehicle that MAVLink and MAVSDK talk to. It exposes no network API of its own;
+      its programmable surface is the MAVLink link, reached through MAVSDK or a ground station.
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/dronecode.png
     humanURL: https://docs.px4.io/
     tags:
       - Drones
       - UAV
+      - Autopilot
+      - PX4
     properties:
       - type: Documentation
         url: https://docs.px4.io/
+      - type: APIReference
+        url: https://docs.px4.io/main/en/index.html
+      - type: GitHubRepository
+        url: https://github.com/PX4/PX4-Autopilot
+      - type: ReleaseNotes
+        url: https://docs.px4.io/main/en/releases/
+      - type: Sandbox
+        url: sandbox/dronecode-sandbox.yml
+  - aid: dronecode:mavsdk
+    name: MAVSDK gRPC API
+    description: >-
+      MAVSDK is the Dronecode Foundation's programmable interface to any MAVLink vehicle, and the only
+      surface in the estate with a full machine-readable contract. 38 protobuf services and 387 RPCs
+      cover arming and flight control, missions, geofencing, offboard setpoints, camera and gimbal,
+      parameters, FTP, logs, failure injection and 59 telemetry subscriptions. It is delivered as
+      mavsdk_server, a binary the consumer runs on their own machine or companion computer — there is
+      no Dronecode-hosted endpoint, no authentication and no key.
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/dronecode.png
+    humanURL: https://mavsdk.mavlink.io/main/en/
+    tags:
+      - Drones
+      - UAV
+      - gRPC
+      - Robotics
+    properties:
+      - type: Protobuf
+        url: grpc/_index.yml
+      - type: Protobuf
+        url: grpc/dronecode-mavsdk-action.proto
+      - type: Protobuf
+        url: grpc/dronecode-mavsdk-mission.proto
+      - type: Protobuf
+        url: grpc/dronecode-mavsdk-telemetry.proto
+      - type: ErrorCatalog
+        url: errors/dronecode-problem-types.yml
+      - type: APIReference
+        url: https://mavsdk.mavlink.io/main/en/cpp/api_reference/index.html
+      - type: Documentation
+        url: https://mavsdk.mavlink.io/main/en/
+      - type: Quickstart
+        url: https://mavsdk.mavlink.io/main/en/python/quickstart.html
+      - type: GitHubRepository
+        url: https://github.com/mavlink/MAVSDK
+      - type: SourceCode
+        url: https://github.com/mavlink/MAVSDK-Proto
+  - aid: dronecode:mavlink
+    name: MAVLink Protocol
+    description: >-
+      MAVLink is the message-level interoperability standard for drones, and the Dronecode Foundation
+      publishes it. The contract is the dialect XML — 19 files including common.xml, standard.xml,
+      minimal.xml and development.xml — from which every language binding is generated, plus five
+      JSON Schemas defining how a component describes its own parameters, actuators and peripherals.
+      The dialect XML carries a machine-readable deprecation element with `since` and `replaced_by`.
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/dronecode.png
+    humanURL: https://mavlink.io/en/
+    tags:
+      - Drones
+      - UAV
+      - MAVLink
+      - Standards
+    properties:
+      - type: APIReference
+        url: https://mavlink.io/en/messages/common.html
+      - type: Documentation
+        url: https://mavlink.io/en/
+      - type: JSONSchema
+        url: json-schema/dronecode-mavlink-component-metadata-general.schema.json
+      - type: JSONSchema
+        url: json-schema/dronecode-mavlink-component-metadata-parameter.schema.json
+      - type: JSONSchema
+        url: json-schema/dronecode-mavlink-component-metadata-actuators.schema.json
+      - type: JSONSchema
+        url: json-schema/dronecode-mavlink-component-metadata-peripherals.schema.json
+      - type: JSONSchema
+        url: json-schema/dronecode-mavlink-component-metadata-translation.schema.json
+      - type: GitHubRepository
+        url: https://github.com/mavlink/mavlink
+  - aid: dronecode:dronecode-org-rest
+    name: dronecode.org WordPress REST API
+    description: >-
+      The only HTTP API the Foundation itself hosts, and the one its RFC 9727 /.well-known/api-catalog
+      advertises. The discovery root is anonymous and lists 74 routes across 7 namespaces; the wp/v2
+      content routes are switched off (rest_no_route) and the wp-abilities agent-tool routes require
+      WordPress Application Password authentication (rest_forbidden). Recorded because the provider
+      publishes it, not because it is an engineering surface.
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/dronecode.png
+    humanURL: https://dronecode.org/
+    baseURL: https://dronecode.org/wp-json/
+    tags:
+      - CMS
+      - WordPress
+    properties:
+      - type: APIReference
+        url: https://developer.wordpress.org/rest-api/
+      - type: Authentication
+        url: authentication/dronecode-authentication.yml
+      - type: APICatalog
+        url: well-known/dronecode-api-catalog.json
 common:
-  - type: DomainSecurity
-    url: security/dronecode-domain-security.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/dronecode-foundation
+  - type: Website
+    url: https://www.dronecode.org/
+  - type: DeveloperPortal
+    name: Dronecode Projects
+    description: The Foundation's index of the five projects it hosts — PX4, Pixhawk, MAVLink, QGroundControl, MAVSDK.
+    url: https://dronecode.org/projects/
   - type: Documentation
-    name: Dronecode Foundation Documentation
-    description: Official documentation for Dronecode Foundation.
+    name: PX4 User and Developer Guide
+    description: Official documentation for the PX4 Autopilot flight stack.
     url: https://docs.px4.io/
-  - type: GitHubOrg
-    name: Dronecode Foundation GitHub
-    description: Source code and repositories for Dronecode Foundation.
-    url: https://github.com/PX4
+  - type: APIReference
+    name: MAVSDK API Reference
+    description: Generated reference for the MAVSDK gRPC services.
+    url: https://mavsdk.mavlink.io/main/en/cpp/api_reference/index.html
+  - type: Quickstart
+    name: MAVSDK Python Quickstart
+    url: https://mavsdk.mavlink.io/main/en/python/quickstart.html
+  - type: Support
+    name: Dronecode Forum
+    description: The community support forum for PX4, MAVSDK and MAVLink.
+    url: https://discuss.px4.io/
+  - type: Community
+    name: Dronecode mailing lists
+    url: https://lists.dronecode.org/groups
   - type: Blog
     url: https://dronecode.org/feed/
+  - type: GitHubOrg
+    name: Dronecode Foundation GitHub
+    description: The Foundation's own organisation. The project code lives under github.com/PX4 and github.com/mavlink.
+    url: https://github.com/Dronecode
+  - type: GitHubOrganization
+    name: MAVLink / MAVSDK / QGroundControl GitHub
+    url: https://github.com/mavlink
+  - type: GitHubRepository
+    name: PX4 GitHub organisation
+    url: https://github.com/PX4
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/dronecode-foundation
+  - type: Pricing
+    name: Dronecode membership
+    description: >-
+      Foundation membership dues, not API pricing. The APIs are free and require no account —
+      see plans/dronecode-plans-pricing.yml.
+    url: https://dronecode.org/membership/
+  - type: SignUp
+    name: Dronecode Forum signup
+    url: https://discuss.px4.io/signup
+  - type: TermsOfUse
+    url: https://dronecode.org/terms-of-use/
+  - type: PrivacyPolicy
+    url: https://dronecode.org/privacy-policy/
+  - type: Plans
+    url: plans/dronecode-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/dronecode-rate-limits.yml
+  - type: FinOps
+    url: finops/dronecode-finops.yml
+  - type: DomainSecurity
+    url: security/dronecode-domain-security.yml
+  - type: VulnerabilityDisclosure
+    url: security/dronecode-vulnerability-disclosure.yml
+  - type: Security
+    name: PX4 security policy
+    description: >-
+      Coordinated disclosure through GitHub Security Advisories with a 7-day acknowledgement
+      commitment, supported-version table, and an explicit AI-assisted-discovery clause.
+    url: security/dronecode-vulnerability-disclosure.yml
+  - type: Packages
+    url: packages/dronecode-packages.yml
+  - type: SDKs
+    name: First-party MAVSDK clients
+    description: Python, Java, Go, Swift and Rust clients published from the mavlink GitHub organisation.
+    url: packages/dronecode-packages.yml
+  - type: Protobuf
+    name: MAVSDK protobuf contract
+    description: 38 services, 387 RPCs — saved verbatim from github.com/mavlink/MAVSDK-Proto.
+    url: grpc/_index.yml
+  - type: ErrorCatalog
+    url: errors/dronecode-problem-types.yml
+  - type: DataModel
+    url: data-model/dronecode-data-model.yml
+  - type: Conventions
+    url: conventions/dronecode-conventions.yml
+  - type: Conformance
+    url: conformance/dronecode-conformance.yml
+  - type: Authentication
+    url: authentication/dronecode-authentication.yml
+  - type: Lifecycle
+    url: lifecycle/dronecode-lifecycle.yml
+  - type: Deprecation
+    name: MAVLink deprecation mechanism
+    description: >-
+      The dialect XML carries <deprecated since="YYYY-MM" replaced_by="..."/> per message, enum and
+      entry — a machine-readable deprecation signal on the standard itself.
+    url: lifecycle/dronecode-lifecycle.yml
+  - type: ChangeLog
+    url: changelog/dronecode-changelog.yml
+  - type: Sandbox
+    name: PX4 SITL
+    description: Software-in-the-loop simulation running identical firmware against the identical contract.
+    url: sandbox/dronecode-sandbox.yml
+  - type: MCPServer
+    name: MCP candidate (no server published)
+    description: Derived candidate tool list. Dronecode publishes no MCP server — deployment.mode is none.
+    url: mcp/dronecode-mcp.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    name: dronecode.org llms.txt
+    description: >-
+      Provider-published and saved verbatim. Covers announcements and marketing pages only — it names
+      none of the Foundation's technical surfaces.
+    url: llms/dronecode-llms.txt
+  - type: WellKnown
+    url: well-known/dronecode-well-known.yml
+  - type: APICatalog
+    name: RFC 9727 api-catalog
+    description: Served at https://dronecode.org/.well-known/api-catalog (HTTP 200, application/linkset+json).
+    url: well-known/dronecode-api-catalog.json
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
+x-enrichment:
+  date: '2026-09-06'
+  status: enriched
+  artifacts_added: 63
+  pass: local-v3

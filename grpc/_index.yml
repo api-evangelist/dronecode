@@ -1,0 +1,220 @@
+generated: '2026-09-06'
+method: searched
+source: https://github.com/mavlink/MAVSDK-Proto @ 4fbf5ce1dcc0439550ff66b9d3b3b8c2ad5561e1 (2026-08-13) — fetched
+  verbatim from raw.githubusercontent.com, HTTP 200 on every file
+provider: Dronecode Foundation
+providerId: dronecode
+project: MAVSDK
+repository: https://github.com/mavlink/MAVSDK-Proto
+docs: https://mavsdk.mavlink.io/main/en/
+ownership_note: MAVSDK is one of the five projects the Dronecode Foundation hosts (dronecode.org lists PX4, PIXHAWK,
+  MAVLINK, QGROUNDCONTROL and MAVSDK under Projects). MAVSDK-Proto lives in the github.com/mavlink organisation,
+  which is the MAVLink/MAVSDK project home under Dronecode governance; the protos declare package mavsdk.rpc.* and
+  the generated clients publish as io.mavsdk (Maven) and mavsdk (PyPI).
+transport: gRPC over HTTP/2. The contract is served by the mavsdk_server binary, which runs on the operator machine
+  or companion computer (default 0.0.0.0:50051) and bridges gRPC to MAVLink on the vehicle link. There is NO Dronecode-hosted
+  endpoint — see mcp/ deployment note.
+file_count: 39
+service_count: 38
+rpc_count: 387
+message_count: 983
+note: mavsdk_options.proto carries no service — it defines the mavsdk.options custom field/method options (async_type,
+  default_value, is_finite) the other 38 files annotate with. Filenames were slug-prefixed per catalog convention;
+  the file bodies are byte-for-byte the upstream sources, so the "import 'mavsdk_options.proto'" lines still name
+  the UPSTREAM path, not the local one.
+files:
+- file: dronecode-mavsdk-action-server.proto
+  package: mavsdk.rpc.action_server
+  service: ActionServerService
+  rpcs: 15
+  messages: 33
+- file: dronecode-mavsdk-action.proto
+  package: mavsdk.rpc.action
+  service: ActionService
+  rpcs: 25
+  messages: 51
+- file: dronecode-mavsdk-arm-authorizer-server.proto
+  package: mavsdk.rpc.arm_authorizer_server
+  service: ArmAuthorizerServerService
+  rpcs: 3
+  messages: 7
+- file: dronecode-mavsdk-calibration.proto
+  package: mavsdk.rpc.calibration
+  service: CalibrationService
+  rpcs: 6
+  messages: 14
+- file: dronecode-mavsdk-camera-server.proto
+  package: mavsdk.rpc.camera_server
+  service: CameraServerService
+  rpcs: 63
+  messages: 138
+- file: dronecode-mavsdk-camera.proto
+  package: mavsdk.rpc.camera
+  service: CameraService
+  rpcs: 42
+  messages: 102
+- file: dronecode-mavsdk-component-metadata-server.proto
+  package: mavsdk.rpc.component_metadata_server
+  service: ComponentMetadataServerService
+  rpcs: 1
+  messages: 3
+- file: dronecode-mavsdk-component-metadata.proto
+  package: mavsdk.rpc.component_metadata
+  service: ComponentMetadataService
+  rpcs: 4
+  messages: 11
+- file: dronecode-mavsdk-core.proto
+  package: mavsdk.rpc.core
+  service: CoreService
+  rpcs: 4
+  messages: 9
+- file: dronecode-mavsdk-events.proto
+  package: mavsdk.rpc.events
+  service: EventsService
+  rpcs: 3
+  messages: 12
+- file: dronecode-mavsdk-failure.proto
+  package: mavsdk.rpc.failure
+  service: FailureService
+  rpcs: 1
+  messages: 3
+- file: dronecode-mavsdk-follow-me.proto
+  package: mavsdk.rpc.follow_me
+  service: FollowMeService
+  rpcs: 7
+  messages: 17
+- file: dronecode-mavsdk-ftp-server.proto
+  package: mavsdk.rpc.ftp_server
+  service: FtpServerService
+  rpcs: 1
+  messages: 3
+- file: dronecode-mavsdk-ftp.proto
+  package: mavsdk.rpc.ftp
+  service: FtpService
+  rpcs: 9
+  messages: 22
+- file: dronecode-mavsdk-geofence.proto
+  package: mavsdk.rpc.geofence
+  service: GeofenceService
+  rpcs: 3
+  messages: 11
+- file: dronecode-mavsdk-gimbal.proto
+  package: mavsdk.rpc.gimbal
+  service: GimbalService
+  rpcs: 10
+  messages: 28
+- file: dronecode-mavsdk-gripper.proto
+  package: mavsdk.rpc.gripper
+  service: GripperService
+  rpcs: 2
+  messages: 5
+- file: dronecode-mavsdk-info.proto
+  package: mavsdk.rpc.info
+  service: InfoService
+  rpcs: 5
+  messages: 15
+- file: dronecode-mavsdk-log-files.proto
+  package: mavsdk.rpc.log_files
+  service: LogFilesService
+  rpcs: 3
+  messages: 9
+- file: dronecode-mavsdk-log-streaming.proto
+  package: mavsdk.rpc.log_streaming
+  service: LogStreamingService
+  rpcs: 3
+  messages: 8
+- file: dronecode-mavsdk-manual-control.proto
+  package: mavsdk.rpc.manual_control
+  service: ManualControlService
+  rpcs: 3
+  messages: 7
+- file: dronecode-mavsdk-mavlink-direct-server.proto
+  package: mavsdk.rpc.mavlink_direct_server
+  service: MavlinkDirectServerService
+  rpcs: 3
+  messages: 8
+- file: dronecode-mavsdk-mavlink-direct.proto
+  package: mavsdk.rpc.mavlink_direct
+  service: MavlinkDirectService
+  rpcs: 3
+  messages: 8
+- file: dronecode-mavsdk-mavsdk-options.proto
+  package: mavsdk.options
+  service: null
+  rpcs: 0
+  messages: 0
+- file: dronecode-mavsdk-mission-raw-server.proto
+  package: mavsdk.rpc.mission_raw_server
+  service: MissionRawServerService
+  rpcs: 4
+  messages: 12
+- file: dronecode-mavsdk-mission-raw.proto
+  package: mavsdk.rpc.mission_raw
+  service: MissionRawService
+  rpcs: 20
+  messages: 46
+- file: dronecode-mavsdk-mission.proto
+  package: mavsdk.rpc.mission
+  service: MissionService
+  rpcs: 14
+  messages: 34
+- file: dronecode-mavsdk-mocap.proto
+  package: mavsdk.rpc.mocap
+  service: MocapService
+  rpcs: 4
+  messages: 20
+- file: dronecode-mavsdk-offboard.proto
+  package: mavsdk.rpc.offboard
+  service: OffboardService
+  rpcs: 13
+  messages: 36
+- file: dronecode-mavsdk-param-server.proto
+  package: mavsdk.rpc.param_server
+  service: ParamServerService
+  rpcs: 11
+  messages: 27
+- file: dronecode-mavsdk-param.proto
+  package: mavsdk.rpc.param
+  service: ParamService
+  rpcs: 8
+  messages: 21
+- file: dronecode-mavsdk-rtk.proto
+  package: mavsdk.rpc.rtk
+  service: RtkService
+  rpcs: 1
+  messages: 4
+- file: dronecode-mavsdk-server-utility.proto
+  package: mavsdk.rpc.server_utility
+  service: ServerUtilityService
+  rpcs: 1
+  messages: 3
+- file: dronecode-mavsdk-shell.proto
+  package: mavsdk.rpc.shell
+  service: ShellService
+  rpcs: 2
+  messages: 5
+- file: dronecode-mavsdk-telemetry-server.proto
+  package: mavsdk.rpc.telemetry_server
+  service: TelemetryServerService
+  rpcs: 17
+  messages: 64
+- file: dronecode-mavsdk-telemetry.proto
+  package: mavsdk.rpc.telemetry
+  service: TelemetryService
+  rpcs: 59
+  messages: 152
+- file: dronecode-mavsdk-transponder.proto
+  package: mavsdk.rpc.transponder
+  service: TransponderService
+  rpcs: 2
+  messages: 6
+- file: dronecode-mavsdk-tune.proto
+  package: mavsdk.rpc.tune
+  service: TuneService
+  rpcs: 1
+  messages: 4
+- file: dronecode-mavsdk-winch.proto
+  package: mavsdk.rpc.winch
+  service: WinchService
+  rpcs: 11
+  messages: 25

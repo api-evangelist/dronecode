@@ -1,0 +1,114 @@
+generated: '2026-09-06'
+method: probed
+source: live HTTPS probes of every host this record knows — the registrable domain and www, the project doc hosts,
+  and the QGroundControl API-docs host
+provider: Dronecode Foundation
+providerId: dronecode
+note: 'Only dronecode.org (and its www alias, the same WordPress origin) serves a real /.well-known document: an
+  RFC 9727 api-catalog linkset whose service-desc points at the site''s own WordPress REST API root, https://dronecode.org/wp-json/
+  (probed 200, 74 routes, 7 namespaces). Every other path on every host 404s. The project documentation hosts (docs.px4.io,
+  mavlink.io, mavsdk.mavlink.io, qgroundcontrol.com) are static doc builds and publish no /.well-known surface at
+  all.'
+hosts:
+- host: dronecode.org
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: dronecode-api-catalog.json
+    content_type: application/linkset+json; charset=utf-8
+    bytes: 522
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: www.dronecode.org
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 200
+    file: dronecode-api-catalog.json
+    content_type: application/linkset+json; charset=utf-8
+    bytes: 522
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: px4.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: docs.px4.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: mavlink.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: mavsdk.mavlink.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: qgroundcontrol.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: api.qgroundcontrol.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404

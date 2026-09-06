@@ -1,0 +1,165 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  Derived from the 39 verbatim MAVSDK protobuf contracts under grpc/ (github.com/mavlink/MAVSDK-Proto
+  @ 4fbf5ce1, 38 services / 387 RPCs) and cross-checked against the MAVSDK guide at
+  https://mavsdk.mavlink.io/main/en/ and the PX4 guide at https://docs.px4.io/main/en/ (both HTTP 200,
+  probed 2026-09-06).
+provider: Dronecode Foundation
+providerId: dronecode
+scope: >-
+  The MAVSDK gRPC API — the only Dronecode surface with a machine-readable contract. The dronecode.org
+  WordPress REST API (see authentication/) is a website CMS surface and follows WordPress conventions,
+  not these.
+protocol:
+  style: gRPC over HTTP/2, protobuf 3
+  server: >-
+    mavsdk_server — a binary the CONSUMER runs on their own machine or companion computer. It listens
+    on 0.0.0.0:50051 by default and bridges gRPC to MAVLink on the vehicle link. There is no
+    Dronecode-hosted endpoint; the API's "host" is whatever the operator starts.
+  streaming: >-
+    Server-streaming is first class. 63 of the 387 RPCs are Subscribe* server-streams (telemetry,
+    mission progress, camera, events, log download); the rest are unary.
+auth:
+  style: none
+  detail: >-
+    The MAVSDK-Proto contract declares no authentication, no credential type and no scopes. Access
+    control is the operator's problem: mavsdk_server binds a local port with no TLS and no token, and
+    the security boundary is the network the operator puts it on plus whatever the vehicle's own
+    MAVLink link enforces. See authentication/dronecode-authentication.yml.
+  cross_link: authentication/dronecode-authentication.yml
+idempotency:
+  coverage: none
+  scope: []
+  header: null
+  detail: >-
+    No replay protection of any kind exists in the contract. No Idempotency-Key equivalent, no request
+    id, no dedupe window, and no field a client could set to make a retry safe. The mutating RPCs are
+    physical commands to an aircraft — Arm, Takeoff, Land, Kill, Reboot, SetActuator, UploadMission —
+    and re-sending one re-executes it. Retries are safe only where the underlying MAVLink command is
+    naturally idempotent (Arm on an already-armed vehicle, SetParamFloat to the same value); they are
+    NOT safe for Takeoff, DoOrbit, Reboot or any Offboard setpoint. A client that retries on
+    RESULT_TIMEOUT — which 27 of the 36 services define — cannot tell a lost request from a lost reply.
+  cross_link: errors/dronecode-problem-types.yml
+reversibility:
+  grade: verified
+  detail: >-
+    Every state-changing flight command in ActionService has an explicit reversal RPC in the same
+    contract, and the proto comments state the condition under which each reversal works — which is
+    the window, even though it is expressed as vehicle state rather than a clock. Graded `verified`
+    on that basis; where no window is stated the row says so rather than inventing one.
+  reversals:
+    - operation: mavsdk.rpc.action.ActionService/Arm
+      reversal: mavsdk.rpc.action.ActionService/Disarm
+      window: >-
+        Only while the vehicle considers itself landed. The contract states it verbatim: "This will
+        disarm a drone that considers itself landed. If flying, the drone should reject the disarm
+        command." A rejected disarm returns RESULT_COMMAND_DENIED_NOT_LANDED.
+      docs: https://github.com/mavlink/MAVSDK-Proto/blob/main/protos/action/action.proto
+    - operation: mavsdk.rpc.action.ActionService/Arm
+      reversal: mavsdk.rpc.action.ActionService/Kill
+      window: >-
+        No window — Kill disarms "irrespective of whether it is landed or flying". The contract warns
+        in the same comment that "the drone will fall out of the sky if this command is used while
+        flying", so it is an escape hatch, not an undo.
+      docs: https://github.com/mavlink/MAVSDK-Proto/blob/main/protos/action/action.proto
+    - operation: mavsdk.rpc.action.ActionService/Takeoff
+      reversal: mavsdk.rpc.action.ActionService/Land
+      window: Any time in flight; Land switches the vehicle to Land flight mode at its current position.
+      docs: https://github.com/mavlink/MAVSDK-Proto/blob/main/protos/action/action.proto
+    - operation: mavsdk.rpc.action.ActionService/Takeoff
+      reversal: mavsdk.rpc.action.ActionService/ReturnToLaunch
+      window: >-
+        Any time in flight. Returns to the launch position and lands; the contract links the PX4
+        Return mode page for the behaviour.
+      docs: https://docs.px4.io/main/en/flight_modes_mc/return.html
+    - operation: mavsdk.rpc.mission.MissionService/UploadMission
+      reversal: mavsdk.rpc.mission.MissionService/ClearMission
+      window: >-
+        Any time. An upload in flight can also be aborted mid-transfer with CancelMissionUpload, which
+        is only meaningful while SubscribeUploadMissionWithProgress is still reporting progress.
+      docs: https://github.com/mavlink/MAVSDK-Proto/blob/main/protos/mission/mission.proto
+    - operation: mavsdk.rpc.mission.MissionService/StartMission
+      reversal: mavsdk.rpc.mission.MissionService/PauseMission
+      window: >-
+        Any time while the mission is running. Pause holds position; the mission resumes from the
+        same item on the next StartMission. Not a rollback — waypoints already flown stay flown.
+      docs: https://github.com/mavlink/MAVSDK-Proto/blob/main/protos/mission/mission.proto
+    - operation: mavsdk.rpc.geofence.GeofenceService/UploadGeofence
+      reversal: mavsdk.rpc.geofence.GeofenceService/ClearGeofence
+      window: Any time. No partial removal — the clear is all-or-nothing.
+      docs: https://github.com/mavlink/MAVSDK-Proto/blob/main/protos/geofence/geofence.proto
+    - operation: mavsdk.rpc.offboard.OffboardService/Start
+      reversal: mavsdk.rpc.offboard.OffboardService/Stop
+      window: >-
+        Any time while offboard is active (IsActive reports it). Stop returns the vehicle to its
+        previous flight mode; the setpoints already applied are not undone.
+      docs: https://github.com/mavlink/MAVSDK-Proto/blob/main/protos/offboard/offboard.proto
+    - operation: mavsdk.rpc.action.ActionService/TransitionToFixedwing
+      reversal: mavsdk.rpc.action.ActionService/TransitionToMulticopter
+      window: VTOL airframes only. Both return RESULT_NO_VTOL_TRANSITION_SUPPORT on a non-VTOL vehicle.
+      docs: https://github.com/mavlink/MAVSDK-Proto/blob/main/protos/action/action.proto
+  irreversible:
+    - operation: mavsdk.rpc.action.ActionService/Terminate
+      note: Runs the configured flight-termination routine (e.g. disarm and deploy parachute). No reversal exists.
+    - operation: mavsdk.rpc.log_files.LogFilesService/EraseAllLogFiles
+      note: Destructive erase of onboard logs. No restore RPC, no retention window in the contract.
+    - operation: mavsdk.rpc.ftp.FtpService/RemoveFile
+      note: Deletes a file on the vehicle. No trash, no restore RPC.
+    - operation: mavsdk.rpc.action.ActionService/Reboot
+      note: Reboots autopilot, companion computer, camera and gimbal. Not reversible; in flight it is unsafe.
+dry_run_mode:
+  supported: partial
+  detail: >-
+    No per-request dry-run flag exists on any RPC. What Dronecode ships instead is a full simulation
+    rig: PX4 SITL (software-in-the-loop) with Gazebo, jMAVSim or a headless build runs the identical
+    firmware and answers the identical MAVSDK contract, so an agent can rehearse an entire flight
+    against a simulated vehicle before touching hardware. Recorded as `partial` because it is a
+    separate environment the caller must stand up, not a mode the API offers. See sandbox/.
+  cross_link: sandbox/dronecode-sandbox.yml
+pagination:
+  style: none
+  detail: >-
+    Not applicable. Collections are returned whole (GetAllParams, ListDirectory, DownloadMission) or
+    streamed (Subscribe*). No cursor, offset, page-size or link-header convention appears anywhere in
+    the 39 protos.
+field_expansion:
+  supported: false
+  detail: Protobuf messages are fixed-shape. No sparse-fieldset or expand parameter exists.
+metadata:
+  supported: false
+  detail: >-
+    No free-form metadata bag on any request or response. The closest analogue is
+    ComponentMetadataService, which is not user metadata but the vehicle publishing its own
+    parameter/actuator/peripheral descriptions — see the JSON Schemas under json-schema/.
+request_tracing:
+  supported: false
+  detail: >-
+    No request id, correlation id or trace header is defined in the contract. gRPC metadata is
+    available at the transport level but MAVSDK neither requires nor documents any.
+versioning:
+  scheme: semver
+  current: 3.17.4
+  detail: >-
+    The contract itself carries no version field and the protobuf packages are unversioned
+    (mavsdk.rpc.action, not mavsdk.rpc.action.v1), so there is no in-band way for a client to
+    negotiate. Versioning happens at the artifact level: MAVSDK C++ releases (v3.17.4, 2026-08-25)
+    and the generated clients that track them. mavsdk_options.proto lets a field or method be
+    annotated with a default value and an async type, but not with a version or a deprecation date.
+  cross_link: lifecycle/dronecode-lifecycle.yml
+error_envelope:
+  shape: per-service protobuf enum
+  detail: >-
+    Each fallible RPC returns a <Service>Result message with an enum Result and a free-text
+    result_str. 36 services, 327 enum values, 76 distinct symbols, and no shared error type — the same
+    symbol name in two services is two different types with different integer values. Crucially the
+    gRPC status is usually OK even on failure, so a client that only checks the transport status will
+    read a denied arm command as a success.
+  cross_link: errors/dronecode-problem-types.yml
+rate_limit_signaling:
+  supported: false
+  detail: >-
+    No quota, no throttle, no rate-limit metadata. The server runs on the consumer's own machine, so
+    the only limits are the vehicle's MAVLink link bandwidth and telemetry stream rates, which the
+    consumer configures. See rate-limits/dronecode-rate-limits.yml.
+  cross_link: rate-limits/dronecode-rate-limits.yml

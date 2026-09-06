@@ -1,0 +1,128 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  Registry metadata endpoints queried unauthenticated on 2026-09-06 — pypi.org/pypi/<pkg>/json,
+  repo1.maven.org/maven2/io/mavsdk/<artifact>/maven-metadata.xml, crates.io/api/v1/crates/<crate>,
+  proxy.golang.org/<module>/@latest — cross-checked against the GitHub release tags in the
+  github.com/mavlink organisation.
+provider: Dronecode Foundation
+providerId: dronecode
+ownership_note: >-
+  dronecode.org lists PX4, PIXHAWK, MAVLINK, QGROUNDCONTROL and MAVSDK as the five projects the
+  Foundation hosts. Everything marked official:true below is published from the github.com/mavlink
+  or github.com/PX4 organisation, which are those projects' homes under Dronecode governance.
+  pymavlink and node-mavlink are deliberately EXCLUDED: both are published from github.com/ArduPilot,
+  a different foundation, even though they implement the same MAVLink protocol.
+package_count: 7
+official_count: 7
+packages:
+  - name: mavsdk
+    registry: pypi
+    url: https://pypi.org/project/mavsdk/
+    repository: https://github.com/mavlink/MAVSDK-Python
+    language: Python
+    official: true
+    version: 3.17.2
+    published: '2026-07-22'
+    description: >-
+      MAVSDK client for Python. Generated from the MAVSDK-Proto gRPC contract and bundled with a
+      mavsdk_server binary, so the package ships both the client stubs and the server that speaks
+      MAVLink to the vehicle.
+    note: >-
+      Tracks the MAVSDK C++ release line. Upstream MAVSDK was at v3.17.4 (2026-08-25) when this was
+      read, so the Python wheel is two patch releases behind — normal lag for this project, not decay.
+  - name: io.mavsdk:mavsdk
+    registry: maven
+    url: https://central.sonatype.com/artifact/io.mavsdk/mavsdk
+    repository: https://github.com/mavlink/MAVSDK-Java
+    language: Java
+    official: true
+    version: 3.17.4
+    published: '2026-08-25'
+    description: MAVSDK client for Java — generated gRPC stubs for the MAVSDK-Proto services.
+  - name: io.mavsdk:mavsdk-server
+    registry: maven
+    url: https://central.sonatype.com/artifact/io.mavsdk/mavsdk-server
+    repository: https://github.com/mavlink/MAVSDK-Java
+    language: Java
+    official: true
+    version: 3.17.4
+    published: '2026-08-25'
+    description: >-
+      Packaged mavsdk_server binary for the JVM/Android — the gRPC server that terminates the
+      MAVSDK-Proto contract and bridges it to the MAVLink vehicle link.
+  - name: mavlink
+    registry: crates.io
+    url: https://crates.io/crates/mavlink
+    repository: https://github.com/mavlink/rust-mavlink
+    language: Rust
+    official: true
+    version: 0.18.0
+    published: '2026-09-03'
+    description: >-
+      Rust implementation of the MAVLink data interchange format, generated from the dialect XML in
+      github.com/mavlink/mavlink. This is the MAVLink protocol crate, not a MAVSDK gRPC client.
+  - name: mavlink-core
+    registry: crates.io
+    url: https://crates.io/crates/mavlink-core
+    repository: https://github.com/mavlink/rust-mavlink
+    language: Rust
+    official: true
+    version: 0.18.0
+    published: '2026-05-09'
+    description: Core (dialect-independent) framing and transport layer split out of the mavlink crate.
+  - name: github.com/mavlink/mavsdk-go
+    registry: go
+    url: https://pkg.go.dev/github.com/mavlink/mavsdk-go
+    repository: https://github.com/mavlink/MAVSDK-Go
+    language: Go
+    official: true
+    version: v0.3.6
+    published: '2025-07-14'
+    description: MAVSDK client for Go — generated gRPC stubs for the MAVSDK-Proto services.
+    note: >-
+      ABANDONMENT SIGNAL. Last module version v0.3.6 (2025-07-14, read from proxy.golang.org) against a
+      MAVSDK C++/Proto line that is at 3.17.4 (2026-08-25). The Go client is more than a year and a
+      whole major line behind the contract it wraps, and the repository publishes no GitHub releases.
+  - name: Mavsdk (Swift Package)
+    registry: none
+    url: https://github.com/mavlink/MAVSDK-Swift
+    repository: https://github.com/mavlink/MAVSDK-Swift
+    language: Swift
+    official: true
+    version: 1.2.0
+    published: '2023-10-11'
+    description: MAVSDK client for Swift, distributed as a Swift Package (SwiftPM has no central registry to query).
+    note: >-
+      ABANDONMENT SIGNAL, and no registry to check it against — SwiftPM resolves from the git tag, so
+      the version above is the newest GitHub release tag (1.2.0, 2023-10-11). Nearly three years behind
+      the 3.17.x MAVSDK line; a consumer resolving `from: "1.2.0"` gets a client for a contract two
+      major versions old.
+excluded:
+  - name: pymavlink
+    registry: pypi
+    version: 2.4.49
+    published: '2025-08-01'
+    reason: >-
+      Real and widely used, but published from github.com/ArduPilot/pymavlink — the ArduPilot project,
+      not Dronecode. Recorded here so a later pass does not re-add it as first-party.
+  - name: node-mavlink
+    registry: npm
+    version: 2.3.0
+    published: '2025-08-26'
+    reason: Published from github.com/ArduPilot/node-mavlink — ArduPilot, not Dronecode.
+  - name: mavlink
+    registry: npm
+    version: 1.0.1
+    published: '2013-05-17'
+    reason: >-
+      Third-party (github.com/omcaree/node-mavlink), last published 2013. Not a Dronecode artifact and
+      squats the obvious npm name — worth knowing when judging the JavaScript story.
+gaps:
+  - >-
+    No first-party JavaScript/TypeScript client. MAVSDK-JavaScript (github.com/mavlink/MAVSDK-JavaScript,
+    a grpc-web wrapper) was last pushed 2022-02-12 and was never published to npm; the `mavlink` npm
+    name belongs to an unrelated 2013 package.
+  - >-
+    MAVSDK-CSharp and MAVSDK-Rust are both ARCHIVED in the github.com/mavlink organisation
+    (last pushed 2022-02-11 and 2024-04-19). No .NET or Rust gRPC client is currently maintained.

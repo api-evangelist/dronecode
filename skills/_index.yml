@@ -1,0 +1,32 @@
+generated: '2026-09-06'
+method: generated
+source: >-
+  Authored by API Evangelist against the verbatim MAVSDK protobuf contracts under grpc/
+  (github.com/mavlink/MAVSDK-Proto @ 4fbf5ce1). Dronecode publishes no skills, no AGENTS.md and no
+  llms-full.txt — searched dronecode.org, px4.io, docs.px4.io, mavlink.io and mavsdk.mavlink.io on
+  2026-09-06. Every operation referenced in these skills was grepped out of the saved .proto files;
+  none is invented.
+provider: Dronecode Foundation
+providerId: dronecode
+first_party: false
+api: MAVSDK gRPC API
+contract: grpc/_index.yml
+skill_count: 3
+safety_posture: >-
+  This is a flight-control API with no authentication and no idempotency. Every skill opens by telling
+  the caller to rehearse in PX4 SITL, names the reversal RPC for each destructive step, and says
+  explicitly which failures must NOT be retried. Kill, Terminate, ArmForce and EraseAllLogFiles are
+  present in the contract and deliberately excluded from all three skills.
+skills:
+  - name: dronecode-preflight-arm-takeoff-land
+    file: dronecode-preflight-arm-takeoff-land.md
+    flow: Connect, health-gate, arm, take off, land, disarm — with the reversal and its window at each step.
+    operation_count: 13
+  - name: dronecode-upload-and-run-mission
+    file: dronecode-upload-and-run-mission.md
+    flow: Geofence, mission upload with progress, start, follow, pause/clear — and what reversal does not mean.
+    operation_count: 13
+  - name: dronecode-stream-telemetry
+    file: dronecode-stream-telemetry.md
+    flow: Choosing among 59 server-streaming telemetry RPCs on a bandwidth-limited link, and telling silence from failure.
+    operation_count: 16

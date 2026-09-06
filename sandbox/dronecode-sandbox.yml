@@ -1,0 +1,82 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://docs.px4.io/main/en/simulation/ (HTTP 200, 2026-09-06) and the simulator pages it links —
+  https://docs.px4.io/main/en/sim_gazebo_gz/ and https://docs.px4.io/main/en/sim_jmavsim/ (both 200).
+  Every value below is quoted from that documentation; nothing is inferred.
+provider: Dronecode Foundation
+providerId: dronecode
+has_sandbox: true
+kind: full-fidelity simulator (SITL), self-hosted
+summary: >-
+  Dronecode's test environment is not a sandbox tenant with fake keys — it is PX4 SITL, which runs the
+  IDENTICAL autopilot firmware against a simulated airframe and answers the IDENTICAL MAVSDK gRPC
+  contract. That makes it a stronger rehearsal surface than most API sandboxes in this catalog: an
+  agent can fly a whole mission, hit real failure modes, and read real telemetry before any hardware
+  is armed. It is also strictly self-hosted — there is no hosted simulator to point a client at, so
+  the consumer builds and runs it.
+test_vs_live:
+  mechanism: separate process, identical contract
+  detail: >-
+    There are no test-mode credentials or key prefixes to distinguish, because the API has no
+    credentials at all (see authentication/). The only thing separating simulation from a real
+    aircraft is which mavsdk_server the client dials. A client pointed at a SITL instance and a client
+    pointed at a live vehicle are byte-for-byte the same code, which is convenient and is also the
+    single biggest operational hazard in this estate.
+  hazard: >-
+    No in-band signal tells a caller it is talking to a simulator. Nothing in the MAVSDK contract
+    reports "this is SITL" — an agent cannot verify from the API that it is in a rehearsal.
+simulators:
+  - name: Gazebo
+    docs: https://docs.px4.io/main/en/sim_gazebo_gz/
+    detail: 3D simulation environment with photorealistic rendering. The documented default target.
+    example_command: make px4_sitl gz_x500
+  - name: SIH (Simulator In Hardware)
+    detail: >-
+      Lightweight simulator running the physics inside PX4 itself. Documented as "headless by default
+      for fastest iteration" — the option that suits an automated/agent test loop.
+    example_command: make px4_sitl_sih sihsim_quadx
+  - name: Gazebo Classic
+    detail: Still available; the documentation marks it for deprecation.
+  - name: jMAVSim, FlightGear, AirSim
+    detail: Community-supported, documented as such rather than as first-party.
+    docs: https://docs.px4.io/main/en/sim_jmavsim/
+connection:
+  offboard_api_port:
+    value: UDP 14540
+    quote: PX4's remote UDP Port 14540 is used for communication with offboard APIs
+    note: >-
+      This is the port MAVSDK/mavsdk_server connects to. Multi-vehicle runs allocate sequentially,
+      "a separate remote port for each instance from 14540 to 14549".
+  ground_station_port:
+    value: UDP 14550
+    quote: PX4's remote UDP Port 14550 is used for communication with ground control stations
+  simulator_port:
+    value: TCP 4560
+    quote: The simulator's local TCP Port, 4560, is used for communication with PX4
+test_values:
+  published: false
+  detail: >-
+    No test cards, test tokens, fixture accounts or hosted test data exist, and none were invented.
+    The simulator generates its own state; the "fixtures" are airframe models and world files shipped
+    with PX4.
+time_simulation:
+  supported: true
+  detail: >-
+    SITL runs on simulated time and can be run faster than real time via the PX4 lockstep
+    simulation clock. This is a property of the simulator, not an API feature — there is no
+    test-clock RPC in the MAVSDK contract.
+triggers_and_failure_injection:
+  supported: true
+  detail: >-
+    FailureService is a real service in the contract — grpc/dronecode-mavsdk-failure.proto, RPC Inject
+    — letting a caller inject unit/component failures (GPS, barometer, motors) into a running vehicle.
+    On SITL this is a genuine fault-injection harness for rehearsing degraded flight. It is the same
+    RPC on real hardware, which is why the contract's own comment treats it as a bench-test facility.
+  operations:
+    - mavsdk.rpc.failure.FailureService/Inject
+    - mavsdk.rpc.action.ActionService/ArmForce
+gaps:
+  - No hosted sandbox endpoint — every simulator is built and run by the consumer.
+  - No published container image for a one-command MAVSDK+SITL rehearsal target on the Dronecode side.
+  - No API-level flag or field distinguishing a simulated vehicle from a real one.

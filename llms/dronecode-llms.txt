@@ -1,0 +1,33 @@
+# Dronecode Foundation
+> The Dronecode Foundation fosters communities through open collaboration between open-source projects and member companies. Part of the Linux Foundation serves as the vendor-neutral home for PX4, MAVLink, QGroundControl, and the MAVSDK
+
+## Posts
+- [UVIFY Rises to Platinum Membership at the Dronecode Foundation](https://dronecode.org/uvify-rises-to-platinum-membership-at-the-dronecode-foundation/): The Dronecode Foundation is proud to announce that UVIFY has upgraded its membership to Platinum level. As a Dronecode member
+- [Dronecode Welcomes Alates as a Silver Member](https://dronecode.org/dronecode-welcomes-alates-as-a-silver-member/): The Dronecode Foundation is pleased to announce that Alates Aerospace has joined as a Member. Based in İzmir, Türkiye, Alates
+- [Dronecode Welcomes Artificer Group as a Silver Member](https://dronecode.org/dronecode-welcomes-artificer-group-as-a-silver-member/): The Dronecode Foundation is pleased to announce that Artificer Group has joined as a Silver Member. Headquartered in Tammela, Finland,
+- [Drone Industry Rallies Behind MAVLink-Military: Dronecode Hackathon Opens Door to New Era of Interoperable Payloads and Platforms](https://dronecode.org/drone-industry-rallies-behind-mavlink-military-dronecode-hackathon-opens-door-to-new-era-of-interoperable-payloads-and-platforms/): Fourteen teams integrated the MAVLink-Military dialect, verifying cross-vendor systems end to end and flying working demos for government and industry
+- [Dronecode Welcomes AstroX as a Silver Member](https://dronecode.org/dronecode-welcomes-astrox-as-a-silver-member/): We are pleased to announce that AstroX has officially joined the Dronecode Foundation as our newest Silver Member. Based in
+
+## Pages
+- [Bylaws](https://dronecode.org/bylaws/): BY-LAWS OF DRONECODE PROJECT, INC. ARTICLE I NAME, PURPOSE AND OFFICES Section 1.1      Name The name of the corporation is
+- [Home Q3 2026 – Ramon](https://dronecode.org/home-q3-2026-ramon/): CUAV Pixhawk V6X Auterion Skynode X Holybro Pixhawk 6X-RT ARK V6X Flight Controller ModalAI Starling 2 Holybro PX4 Developer Kit
+- [Dronecode Members](https://dronecode.org/dronecode-members/)
+- [Membership](https://dronecode.org/membership/): Read below to discover the benefits and opportunities of membership, learn about the different membership levels, and access all the relevant forms and documentation.
+- [Home Q1 2026 – Ramon](https://dronecode.org/): CUAV Pixhawk V6X Auterion Skynode X Holybro Pixhawk 6X-RT ARK V6X Flight Controller ModalAI Starling 2 Holybro PX4 Developer Kit
+
+## Categories
+- [Announcements](https://dronecode.org/category/announcements/)
+- [Events](https://dronecode.org/category/events/)
+- [Videos](https://dronecode.org/category/videos/)
+- [Releases](https://dronecode.org/category/releases/)
+- [News](https://dronecode.org/category/news/)
+
+## Tags
+- [camera](https://dronecode.org/tag/camera/)
+- [remotesensing](https://dronecode.org/tag/remotesensing/)
+- [pixhawk](https://dronecode.org/tag/pixhawk/)
+- [dronecode](https://dronecode.org/tag/dronecode/)
+- [radar](https://dronecode.org/tag/radar/)
+
+## Optional
+- [Sitemap index](https://dronecode.org/wp-sitemap.xml)

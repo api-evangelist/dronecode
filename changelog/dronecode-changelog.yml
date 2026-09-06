@@ -1,0 +1,105 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  GitHub Releases for mavlink/MAVSDK and PX4/PX4-Autopilot, read from the GitHub REST API on
+  2026-09-06. These are the dated, per-version release notes the projects actually publish; there is
+  no separate changelog page on any Dronecode web property.
+provider: Dronecode Foundation
+providerId: dronecode
+scheme: semver
+note: >-
+  The Foundation publishes no single estate-wide changelog. Each project keeps its own GitHub release
+  feed, and the API CONTRACT (MAVSDK-Proto) has a third tag line again — its latest tag is 2.0.0 while
+  the SDK that implements it is at 3.17.4, so "which contract version am I on" cannot be answered from
+  the changelog. Recent window only; both feeds are the canonical source.
+feeds:
+  - name: MAVSDK (the gRPC API implementation)
+    url: https://github.com/mavlink/MAVSDK/releases
+    atom: https://github.com/mavlink/MAVSDK/releases.atom
+    current_version: v3.17.4
+    current_date: '2026-08-25'
+  - name: MAVSDK-Proto (the contract itself)
+    url: https://github.com/mavlink/MAVSDK-Proto/tags
+    current_version: 2.0.0
+    note: >-
+      Tag line diverged from MAVSDK's. Last commit to main 2026-08-13 (4fbf5ce1) — the revision saved
+      verbatim under grpc/ — is newer than the newest tag.
+  - name: PX4 Autopilot (the firmware the API talks to)
+    url: https://github.com/PX4/PX4-Autopilot/releases
+    current_version: v1.17.0
+    current_date: '2026-05-13'
+  - name: QGroundControl
+    url: https://github.com/mavlink/qgroundcontrol/releases
+    current_version: v5.1.4
+    current_date: '2026-08-30'
+  - name: Dronecode Foundation news
+    url: https://dronecode.org/blog-page/
+    rss: https://dronecode.org/feed/
+    note: Foundation/membership announcements, not API change notes.
+entries:
+  - product: MAVSDK
+    version: v3.17.4
+    date: '2026-08-25'
+    breaking: false
+    highlights:
+      - Backport — fix Android build with recent symbol-visibility changes (PR 3044).
+  - product: MAVSDK
+    version: v3.17.3
+    date: '2026-08-25'
+    breaking: false
+    highlights:
+      - Backport — mavsdk_server Android CI build fix (PR 3031).
+  - product: MAVSDK
+    version: v3.17.2
+    date: '2026-07-17'
+    breaking: false
+    highlights:
+      - Assorted bugfix backports to the v3 line (PR 2936). This is the release PyPI `mavsdk` 3.17.2 tracks.
+  - product: MAVSDK
+    version: v3.17.1
+    date: '2026-04-15'
+    breaking: false
+    highlights:
+      - Linker version script added to hide third-party symbols (PR 2857).
+      - libmavlike bumped to add MAVLink v1 support in BufferParser (PR 2865).
+  - product: MAVSDK
+    version: v3.17.0
+    date: '2026-04-08'
+    breaking: false
+    additions:
+      - 'core: symbols hidden by default, only the public API exported (PR 2855).'
+  - product: MAVSDK
+    version: v3.16.0
+    date: '2026-04-02'
+    breaking: false
+    additions:
+      - 'core: set_callback_executor API for custom callback dispatch (PR 2769).'
+    highlights:
+      - Empty mission now returns empty (PR 2770); setting the current mission item fixed (PR 2771).
+  - product: MAVSDK
+    version: v3.15.0
+    date: '2026-02-05'
+    breaking: false
+    additions:
+      - SetRelay action support added (PR 2750) — visible in the contract as ActionService/SetRelay.
+  - product: PX4 Autopilot
+    version: v1.17.0
+    date: '2026-05-13'
+    breaking: false
+    highlights:
+      - Multicopter Altitude Cruise mode; fixed-wing Takeoff mode that keeps climbing through loss of position.
+      - PX4 ROS 2 Control Interface extended to fixed-wing and rover setpoint types.
+      - Maturing Zenoh middleware putting a PX4 vehicle into the ROS 2 graph; experimental on-device neural-network control path; three new INS driver families.
+      - A coordinated wave of security fixes.
+    source: https://dronecode.org/ (release summary) and https://github.com/PX4/PX4-Autopilot/releases/tag/v1.17.0
+  - product: PX4 Autopilot
+    version: v1.18.0-beta2
+    date: '2026-08-09'
+    prerelease: true
+    breaking: false
+    highlights:
+      - Second beta of the v1.18 line. Prereleases are published openly (alpha1 2026-05-13, beta1 2026-07-08).
+  - product: QGroundControl
+    version: v5.1.4
+    date: '2026-08-30'
+    breaking: false

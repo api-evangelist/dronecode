@@ -1,0 +1,117 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  Derived from the verbatim contracts held in this repo — the 39 MAVSDK protobuf files under grpc/
+  and the five MAVLink component-metadata JSON Schemas under json-schema/ — and from the published
+  MAVLink specification at https://mavlink.io/en/ (HTTP 200, probed 2026-09-06). Each entry names the
+  exact artifact or URL the claim reads from; nothing here is asserted from marketing prose.
+provider: Dronecode Foundation
+providerId: dronecode
+note: >-
+  Dronecode is unusual in this catalog: it is not a company conforming to somebody else's standard, it
+  is the vendor-neutral body that PUBLISHES the standard its market runs on. MAVLink is the drone
+  industry's message-level interoperability standard and Dronecode is its steward, so the
+  domain-standard entry below is authorship, not adoption. There is no financial, health or telecom
+  regime in play and none is claimed.
+conformance:
+  - id: mavlink
+    name: MAVLink 2.0 micro air vehicle communication protocol
+    category: domain-standard
+    role: publisher
+    conforms: true
+    evidence: >-
+      grpc/dronecode-mavsdk-mavlink-direct.proto — the MavlinkDirectService contract carries MavlinkMessage
+      with `message_name` and a JSON `fields` payload, and states the message names are those of the
+      MAVLink dialect XML. The dialect definitions themselves are published by this provider at
+      https://github.com/mavlink/mavlink/tree/master/message_definitions/v1.0 (19 dialect XML files
+      including common.xml, standard.xml, minimal.xml and development.xml) and rendered at
+      https://mavlink.io/en/messages/common.html (HTTP 200, 2026-09-06).
+    signature: >-
+      The contract's own type system is MAVLink: mavlink_direct.proto passes MAVLink message names and
+      fields through untranslated, and 36 of the 38 services are typed wrappers over MAVLink commands.
+  - id: mavlink-component-information
+    name: MAVLink COMPONENT_INFORMATION / component metadata
+    category: domain-standard
+    role: publisher
+    conforms: true
+    evidence: >-
+      json-schema/dronecode-mavlink-component-metadata-{general,parameter,actuators,peripherals,translation}.schema.json
+      — five JSON Schema draft-07 documents saved verbatim from
+      https://raw.githubusercontent.com/mavlink/mavlink/master/component_metadata/ (all HTTP 200,
+      2026-09-06). Their `description` fields name the MAVLink enum values directly:
+      "Schema for COMP_METADATA_TYPE_GENERAL", "…_PARAMETER", "…_ACTUATORS", "…_PERIPHERALS", and the
+      `$id` values resolve to https://mavlink.io/, this provider's own host.
+    signature: '$id: https://mavlink.io/comp_version.schema.json + description "Schema for COMP_METADATA_TYPE_*"'
+    consumed_by: grpc/dronecode-mavsdk-component-metadata.proto (ComponentMetadataService, 4 RPCs)
+  - id: grpc
+    name: gRPC over HTTP/2
+    category: transport
+    conforms: true
+    evidence: >-
+      grpc/_index.yml — 38 protobuf services totalling 387 rpc declarations, of which 63 are
+      server-streaming Subscribe* methods. Source github.com/mavlink/MAVSDK-Proto @ 4fbf5ce1.
+  - id: protobuf3
+    name: Protocol Buffers version 3
+    category: serialization
+    conforms: true
+    evidence: 'Every file under grpc/ opens with `syntax = "proto3";` — 39 of 39.'
+  - id: json-schema-draft-07
+    name: JSON Schema draft-07
+    category: schema
+    conforms: true
+    evidence: >-
+      All five files under json-schema/ declare
+      "$schema": "http://json-schema.org/draft-07/schema".
+  - id: semver
+    name: Semantic Versioning 2.0.0
+    category: versioning
+    conforms: true
+    evidence: >-
+      MAVSDK release tags are strict MAJOR.MINOR.PATCH (v3.17.4, 2026-08-25) and the generated clients
+      publish on the same numbers across PyPI (mavsdk 3.17.2), Maven Central (io.mavsdk:mavsdk 3.17.4)
+      and crates.io (mavlink 0.18.0). See packages/dronecode-packages.yml.
+  - id: rfc9727-api-catalog
+    name: RFC 9727 /.well-known/api-catalog
+    category: discovery
+    conforms: true
+    evidence: >-
+      https://dronecode.org/.well-known/api-catalog returned HTTP 200 with
+      content-type application/linkset+json on 2026-09-06. Body saved verbatim to
+      well-known/dronecode-api-catalog.json; it is a valid linkset with anchor, service-desc,
+      service-doc and status members.
+    caveat: >-
+      The catalog is real and correctly shaped, but it advertises exactly one API — the website's own
+      WordPress REST root — and names none of the Foundation's actual engineering contracts (MAVSDK
+      gRPC, MAVLink dialects, component metadata). It is a CMS plugin's output, not a curated estate.
+  - id: rfc9457
+    name: RFC 9457 Problem Details for HTTP APIs
+    category: errors
+    conforms: false
+    evidence: >-
+      Not applicable and not published. The API is gRPC; errors are per-service protobuf enums
+      (36 enums, 327 values) with no HTTP problem+json anywhere. See errors/dronecode-problem-types.yml.
+  - id: oauth2
+    name: OAuth 2.0
+    category: authorization
+    conforms: false
+    evidence: >-
+      No securityScheme in any of the 39 protos, and /.well-known/oauth-authorization-server returned
+      404 on all eight hosts probed (well-known/dronecode-well-known.yml). The MAVSDK contract declares
+      no authentication of any kind — see authentication/dronecode-authentication.yml.
+  - id: openapi
+    name: OpenAPI Specification
+    category: contract
+    conforms: false
+    evidence: >-
+      No OpenAPI or Swagger document is published on any host. Probed 2026-09-06 across dronecode.org,
+      px4.io, docs.px4.io, mavlink.io, mavsdk.mavlink.io, qgroundcontrol.com and
+      api.qgroundcontrol.com. This is a correct architectural choice, not a gap — the API is gRPC and
+      the protobuf contract is the machine-readable contract.
+  - id: asyncapi
+    name: AsyncAPI
+    category: events
+    conforms: false
+    evidence: >-
+      No AsyncAPI document is published, though a real event surface exists: 63 server-streaming
+      Subscribe* RPCs across the MAVSDK services, plus MAVLink's own message-stream model. Nothing
+      was authored on the provider's behalf.

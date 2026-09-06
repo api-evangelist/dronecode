@@ -1,0 +1,117 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  Candidate tool list derived from the verbatim MAVSDK protobuf contracts under grpc/
+  (github.com/mavlink/MAVSDK-Proto @ 4fbf5ce1, 38 services / 387 RPCs). No Dronecode-published MCP
+  server exists — searched 2026-09-06 across the dronecode.org, px4.io, mavlink.io and
+  mavsdk.mavlink.io documentation and the github.com/mavlink and github.com/PX4 organisations.
+provider: Dronecode Foundation
+providerId: dronecode
+status: candidate
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+  note: >-
+    Nobody at Dronecode ships an MCP server. The community has built several against MAVSDK — the
+    ones found were MAVLinkMCP (github.com/ion-g-ion/MAVLinkMCP), EchoPilot (announced on the
+    Dronecode forum, discuss.px4.io/t/.../46998) and DroneSphere
+    (github.com/alireza787b/dronesphere) — and NONE is a Dronecode artifact, so none is recorded as
+    the provider's. mode is `none` and endpoint/install are deliberately empty: there is no URL to
+    call and no package the Foundation publishes.
+third_party_servers_seen:
+  - name: MAVLinkMCP
+    url: https://github.com/ion-g-ion/MAVLinkMCP
+    first_party: false
+  - name: EchoPilot
+    url: https://discuss.px4.io/t/echopilot-langgraph-mcp-server-for-natural-language-px4-control/46998
+    first_party: false
+    note: Announced on the Dronecode-run forum, which is community space, not a Foundation release.
+  - name: DroneSphere
+    url: https://github.com/alireza787b/dronesphere
+    first_party: false
+candidate_note: >-
+  If Dronecode did ship one, the contract is already shaped for it: 324 unary RPCs map cleanly to
+  tools and their request messages ARE the inputSchema, while the 63 Subscribe* server-streams do not
+  — MCP has no streaming tool result, so telemetry would need snapshot tools rather than a direct
+  mapping. The candidates below are the marquee flows only, not a mechanical dump of all 387.
+safety_note: >-
+  This is a flight-control API. An MCP server over it hands an agent Arm, ArmForce, Takeoff, Kill,
+  Terminate and Reboot on a real aircraft, with NO authentication in the contract (see
+  authentication/) and NO idempotency (see conventions/ — a retried Takeoff takes off again). Any
+  real implementation should default to a PX4 SITL target (see sandbox/) and gate the destructive
+  tools behind explicit human confirmation.
+tools:
+  - name: get_vehicle_info
+    rest: []
+    grpc: [mavsdk.rpc.info.InfoService/GetVersion, mavsdk.rpc.info.InfoService/GetIdentification, mavsdk.rpc.info.InfoService/GetProduct]
+    category: read
+    destructive: false
+  - name: get_telemetry_snapshot
+    grpc: [mavsdk.rpc.telemetry.TelemetryService/GetGpsGlobalOrigin]
+    category: read
+    destructive: false
+    note: >-
+      The rest of TelemetryService is 59 RPCs of which almost all are Subscribe* streams. A snapshot
+      tool would have to take the first message off each stream; the contract offers no unary getter
+      for position, attitude or battery.
+  - name: arm_vehicle
+    grpc: [mavsdk.rpc.action.ActionService/Arm]
+    category: write
+    destructive: true
+    reversal: mavsdk.rpc.action.ActionService/Disarm
+    confirmation: required
+  - name: takeoff
+    grpc: [mavsdk.rpc.action.ActionService/Takeoff, mavsdk.rpc.action.ActionService/SetTakeoffAltitude]
+    category: write
+    destructive: true
+    reversal: mavsdk.rpc.action.ActionService/Land
+    confirmation: required
+  - name: land
+    grpc: [mavsdk.rpc.action.ActionService/Land]
+    category: write
+    destructive: false
+  - name: return_to_launch
+    grpc: [mavsdk.rpc.action.ActionService/ReturnToLaunch]
+    category: write
+    destructive: false
+  - name: upload_mission
+    grpc: [mavsdk.rpc.mission.MissionService/UploadMission]
+    category: write
+    destructive: false
+    reversal: mavsdk.rpc.mission.MissionService/ClearMission
+  - name: start_mission
+    grpc: [mavsdk.rpc.mission.MissionService/StartMission, mavsdk.rpc.mission.MissionService/PauseMission]
+    category: write
+    destructive: true
+    reversal: mavsdk.rpc.mission.MissionService/PauseMission
+    confirmation: required
+  - name: set_geofence
+    grpc: [mavsdk.rpc.geofence.GeofenceService/UploadGeofence, mavsdk.rpc.geofence.GeofenceService/ClearGeofence]
+    category: write
+    destructive: false
+  - name: get_parameter
+    grpc: [mavsdk.rpc.param.ParamService/GetParamFloat, mavsdk.rpc.param.ParamService/GetParamInt, mavsdk.rpc.param.ParamService/GetAllParams]
+    category: read
+    destructive: false
+  - name: set_parameter
+    grpc: [mavsdk.rpc.param.ParamService/SetParamFloat, mavsdk.rpc.param.ParamService/SetParamInt]
+    category: write
+    destructive: true
+    confirmation: required
+    note: Parameters change flight behaviour. No reversal RPC — a caller must read the old value first and write it back.
+  - name: inject_failure
+    grpc: [mavsdk.rpc.failure.FailureService/Inject]
+    category: write
+    destructive: true
+    confirmation: required
+    note: Simulation/bench use. See sandbox/dronecode-sandbox.yml.
+excluded_from_candidates:
+  - operations: [mavsdk.rpc.action.ActionService/Kill, mavsdk.rpc.action.ActionService/Terminate, mavsdk.rpc.action.ActionService/ArmForce, mavsdk.rpc.log_files.LogFilesService/EraseAllLogFiles]
+    reason: >-
+      Irreversible or life-safety operations. Kill drops the aircraft out of the sky by design and
+      Terminate deploys the parachute; neither belongs in an agent tool list without a deliberate
+      human-in-the-loop design decision by the provider.

@@ -3,89 +3,61 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Dronecode Foundation
 providerId: dronecode
+generated: '2026-09-06'
+method: probed
+source: >-
+  The 39 verbatim MAVSDK protobuf contracts under grpc/ (no quota or throttle field in any of them),
+  plus a live unauthenticated request to https://dronecode.org/wp-json/ on 2026-09-06 with the full
+  response headers inspected.
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-06'
+supersedes: >-
+  The 2026-05-04 bulk-sweep scaffold that previously occupied this file. It declared
+  X-RateLimit-Limit / X-RateLimit-Remaining / X-RateLimit-Reset / RateLimit-Policy headers, a 429
+  throttle response and a 10 req/min free-tier limit. Dronecode returns none of those headers and
+  publishes no limits; every value in that file was invented. Replaced with the probed result.
 tags:
   - Drones
   - Linux Foundation
   - Robotics
   - UAV
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Dronecode Foundation API surface. Captures
-  per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values
-  to be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Dronecode Foundation API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Dronecode Foundation API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Dronecode Foundation API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Dronecode Foundation API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Dronecode Foundation API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers:
-  - FN: Kin Lane
-    email: info@apievangelist.com
+description: >-
+  Dronecode publishes no API rate limits, and on its one HTTP surface it emits no rate-limit headers.
+  This is an honest zero rather than an undocumented policy: the MAVSDK gRPC server runs on the
+  consumer's own hardware, so there is no shared resource for the Foundation to meter.
+limit_count: 0
+headers: {}
+headers_observed: []
+responseCodes: {}
+limits: []
+surfaces:
+  - api: MAVSDK gRPC API
+    published_limits: false
+    signalling: none
+    detail: >-
+      No quota, throttle, burst, concurrency cap or backoff hint appears in any of the 387 RPCs. The
+      real constraints are physical and configured by the operator, not by the Foundation: the
+      vehicle's MAVLink link bandwidth (typically a 57.6 kbps telemetry radio or a WiFi/LTE companion
+      link) and the per-message stream rates the autopilot is configured to emit. An agent should
+      treat telemetry Subscribe* streams as rate-shaped by the link, and should not assume any
+      server-side protection against flooding the vehicle with setpoints.
+    exhaustion_behaviour: >-
+      Not a 429. Overrunning the link shows up as RESULT_TIMEOUT (defined by 27 of the 36 services) or
+      RESULT_CONNECTION_ERROR (20 services) — the same codes a genuinely lost vehicle produces, so a
+      client cannot distinguish congestion from disconnection.
+  - api: dronecode.org WordPress REST API
+    published_limits: false
+    signalling: none
+    probe:
+      url: https://dronecode.org/wp-json/
+      status: 200
+      rate_limit_headers: []
+      note: >-
+        Response carries only `server: nginx` and an `x-cache` chain. No X-RateLimit-*, no
+        RateLimit-*, no Retry-After. Any protection in front of it is invisible to the caller.
+gaps:
+  - >-
+    RESULT_TIMEOUT and RESULT_CONNECTION_ERROR are overloaded — they mean "the link is saturated",
+    "the vehicle went away" and "the request was lost" with no way to tell them apart, and no
+    retry-after hint. That is the closest thing to a rate-limit signal the contract has.

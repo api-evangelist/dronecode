@@ -1,0 +1,22 @@
+{
+    "linkset": [
+        {
+            "anchor": "https://dronecode.org/wp-json/",
+            "service-desc": [
+                {
+                    "href": "https://dronecode.org/wp-json/"
+                }
+            ],
+            "service-doc": [
+                {
+                    "href": "https://developer.wordpress.org/rest-api/"
+                }
+            ],
+            "status": [
+                {
+                    "href": "https://dronecode.org"
+                }
+            ]
+        }
+    ]
+}

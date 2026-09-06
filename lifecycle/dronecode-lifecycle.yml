@@ -1,0 +1,82 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  GitHub release metadata for mavlink/MAVSDK and PX4/PX4-Autopilot (read 2026-09-06), the MAVLink XML
+  schema guide at https://mavlink.io/en/guide/xml_schema.html and
+  https://mavlink.io/en/guide/define_xml_element.html (both HTTP 200), and the deprecation elements
+  counted directly in the published dialect XML at
+  https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/.
+provider: Dronecode Foundation
+providerId: dronecode
+versioning:
+  scheme: semver
+  in_band: false
+  detail: >-
+    Versions live on the artifacts, not in the contract. MAVSDK ships MAJOR.MINOR.PATCH tags
+    (v3.17.4, 2026-08-25) and the protobuf packages are unversioned — mavsdk.rpc.action, not
+    mavsdk.rpc.action.v1 — so a client cannot negotiate a contract version over the wire. MAVSDK-Proto
+    carries its own tag line (latest 2.0.0) that no longer tracks the MAVSDK release number, which is
+    a discoverability trap for anyone pinning the contract rather than the SDK.
+  px4_scheme: >-
+    PX4 firmware runs a separate semver line with published alpha/beta/rc prereleases — v1.17.0 stable
+    (2026-05-13), v1.18.0-beta2 (2026-08-09).
+deprecation:
+  policy_published: true
+  machine_readable: true
+  mechanism: >-
+    MAVLink's dialect XML carries a first-class <deprecated since="YYYY-MM" replaced_by="MESSAGE_OR_ENUM"/>
+    element on messages, enums and enum entries, and a <wip/> element marking definitions still under
+    test. This is a genuinely machine-readable deprecation signal on the standard itself — a code
+    generator or an agent reading the dialect can see, per symbol, that it is deprecated, when it was
+    deprecated, and what replaced it. Very few providers in this catalog publish anything equivalent.
+  counts_observed:
+    - dialect: common.xml
+      deprecated: 17
+      wip: 15
+    - dialect: standard.xml
+      deprecated: 1
+    - dialect: minimal.xml
+      deprecated: 2
+    - dialect: development.xml
+      deprecated: 0
+  example: >-
+    <deprecated since="2025-02" replaced_by="MAV_MODE_FLAG">Using MAV_MODE to set modes is less
+    predictable than using standard modes (MAV_STANDARD_MODE) or custom modes
+    (MAV_MODE_FLAG_CUSTOM_MODE_ENABLED).</deprecated> — from common.xml, verbatim.
+  docs: https://mavlink.io/en/guide/define_xml_element.html
+  gaps:
+    - >-
+      No sunset window. The guide says definitions "may be marked as deprecated" but states no period
+      after which a deprecated message is removed, and no removal has a date attached. A consumer
+      learns THAT a symbol is deprecated and what replaces it, never by when they must move.
+    - >-
+      No RFC 8594 Sunset or Deprecation HTTP headers anywhere — there is no HTTP surface to carry them.
+    - >-
+      MAVSDK's own protobuf contract carries no deprecation annotation at all. The 39 protos use
+      neither `[deprecated = true]` nor `option deprecated`, so an RPC removed between MAVSDK majors
+      gives a client no in-contract warning.
+sla:
+  published: false
+  detail: >-
+    No SLA, no uptime commitment, no support tier. There is nothing to commit to: the API is a binary
+    the consumer runs on their own hardware, and the Foundation hosts no endpoint. Membership tiers
+    buy flight testing and consulting hours, not availability — see plans/dronecode-plans-pricing.yml.
+status_page:
+  published: false
+  probes:
+    - url: https://status.dronecode.org/
+      status: 0
+      note: DNS does not resolve
+  detail: >-
+    No status page exists and none is warranted for a self-hosted contract. The one Dronecode-operated
+    surface that could have one — dronecode.org, whose /.well-known/api-catalog points its `status`
+    member at https://dronecode.org itself — points at the site root rather than at any status resource.
+support:
+  forum: https://discuss.px4.io/
+  discord: http://discord.gg/Dronecode
+  mailing_lists: https://lists.dronecode.org/groups
+  issues: https://github.com/mavlink/MAVSDK/issues
+deprecated_operations: []
+deprecated_operations_note: >-
+  Derived from the contract: zero of the 387 MAVSDK RPCs carry a deprecation marker. The only
+  deprecation signal in the estate is on the MAVLink dialect XML, recorded above.

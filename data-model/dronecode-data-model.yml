@@ -1,0 +1,389 @@
+generated: '2026-09-06'
+method: derived
+source: Derived from the 39 verbatim MAVSDK protobuf contracts under grpc/ (github.com/mavlink/MAVSDK-Proto @ 4fbf5ce1).
+  Message and field names are read straight out of those files; nothing is inferred from documentation.
+provider: Dronecode Foundation
+providerId: dronecode
+api: MAVSDK gRPC API
+note: 'Protobuf, not REST. There are no resource IDs, no URLs, no $refs and no shared identity model — the "entities"
+  are protobuf messages scoped to a single service package, and the same concept appears as an unrelated type in
+  several packages (Position exists separately in mavsdk.rpc.telemetry, mavsdk.rpc.mission and mavsdk.rpc.follow_me).
+  Relationships below are composition edges only: message A embeds message B. Nothing in this API has a primary
+  key or a cross-service reference, which is the single most important thing an integrator needs to know about it.'
+message_count: 983
+domain_message_count: 202
+wrapper_message_count: 781
+relationship_count: 81
+identity:
+  primary_keys: false
+  id_prefixes: []
+  cross_service_references: false
+  detail: No message in the contract carries an id field that another service resolves. Vehicles are addressed by
+    MAVLink system/component id at the transport layer, outside the protobuf types; mission items are addressed
+    by array index; parameters by name string.
+shared_concepts_duplicated:
+- AccelerationFrd
+- ActuatorControlTarget
+- ActuatorOutputStatus
+- AllParams
+- AngularVelocityBody
+- AngularVelocityFrd
+- Attitude
+- Battery
+- CaptureInfo
+- Covariance
+- CustomParam
+- DistanceSensor
+- EulerAngle
+- FixedwingMetrics
+- FloatParam
+- GpsInfo
+- GroundTruth
+- Heading
+- Imu
+- Information
+- IntParam
+- MagneticFieldFrd
+- MavlinkMessage
+- MissionItem
+- MissionPlan
+- MissionProgress
+- Odometry
+- Position
+- PositionBody
+- PositionNed
+- PositionVelocityNed
+- ProgressData
+- Quaternion
+- RcStatus
+- ScaledPressure
+- StatusText
+- VelocityBody
+- VelocityNed
+relationships:
+- from: mavsdk.rpc.camera.CameraList
+  to: mavsdk.rpc.camera.Information
+  kind: has_many
+  via: cameras
+- from: mavsdk.rpc.camera.CaptureInfo
+  to: mavsdk.rpc.camera.EulerAngle
+  kind: has_one
+  via: attitude_euler_angle
+- from: mavsdk.rpc.camera.CaptureInfo
+  to: mavsdk.rpc.camera.Quaternion
+  kind: has_one
+  via: attitude_quaternion
+- from: mavsdk.rpc.camera.CaptureInfo
+  to: mavsdk.rpc.camera.Position
+  kind: has_one
+  via: position
+- from: mavsdk.rpc.camera.CurrentSettingsUpdate
+  to: mavsdk.rpc.camera.Setting
+  kind: has_many
+  via: current_settings
+- from: mavsdk.rpc.camera.PossibleSettingOptionsUpdate
+  to: mavsdk.rpc.camera.SettingOptions
+  kind: has_many
+  via: setting_options
+- from: mavsdk.rpc.camera.Setting
+  to: mavsdk.rpc.camera.Option
+  kind: has_one
+  via: option
+- from: mavsdk.rpc.camera.SettingOptions
+  to: mavsdk.rpc.camera.Option
+  kind: has_many
+  via: options
+- from: mavsdk.rpc.camera.StorageUpdate
+  to: mavsdk.rpc.camera.Storage
+  kind: has_one
+  via: storage
+- from: mavsdk.rpc.camera.VideoStreamInfo
+  to: mavsdk.rpc.camera.VideoStreamSettings
+  kind: has_one
+  via: settings
+- from: mavsdk.rpc.camera.VideoStreamUpdate
+  to: mavsdk.rpc.camera.VideoStreamInfo
+  kind: has_one
+  via: video_stream_info
+- from: mavsdk.rpc.camera_server.CaptureInfo
+  to: mavsdk.rpc.camera_server.Quaternion
+  kind: has_one
+  via: attitude_quaternion
+- from: mavsdk.rpc.camera_server.CaptureInfo
+  to: mavsdk.rpc.camera_server.Position
+  kind: has_one
+  via: position
+- from: mavsdk.rpc.events.HealthAndArmingCheckMode
+  to: mavsdk.rpc.events.HealthAndArmingCheckProblem
+  kind: has_many
+  via: problems
+- from: mavsdk.rpc.events.HealthAndArmingCheckReport
+  to: mavsdk.rpc.events.HealthAndArmingCheckProblem
+  kind: has_many
+  via: all_problems
+- from: mavsdk.rpc.events.HealthAndArmingCheckReport
+  to: mavsdk.rpc.events.HealthAndArmingCheckMode
+  kind: has_one
+  via: current_mode_intention
+- from: mavsdk.rpc.events.HealthAndArmingCheckReport
+  to: mavsdk.rpc.events.HealthComponentReport
+  kind: has_many
+  via: health_components
+- from: mavsdk.rpc.ftp.ListDirectoryData
+  to: mavsdk.rpc.ftp.FilesystemEntry
+  kind: has_many
+  via: entries
+- from: mavsdk.rpc.geofence.Circle
+  to: mavsdk.rpc.geofence.Point
+  kind: has_one
+  via: point
+- from: mavsdk.rpc.geofence.GeofenceData
+  to: mavsdk.rpc.geofence.Circle
+  kind: has_many
+  via: circles
+- from: mavsdk.rpc.geofence.GeofenceData
+  to: mavsdk.rpc.geofence.Polygon
+  kind: has_many
+  via: polygons
+- from: mavsdk.rpc.geofence.Polygon
+  to: mavsdk.rpc.geofence.Point
+  kind: has_many
+  via: points
+- from: mavsdk.rpc.gimbal.Attitude
+  to: mavsdk.rpc.gimbal.AngularVelocityBody
+  kind: has_one
+  via: angular_velocity
+- from: mavsdk.rpc.gimbal.Attitude
+  to: mavsdk.rpc.gimbal.EulerAngle
+  kind: has_one
+  via: euler_angle_forward
+- from: mavsdk.rpc.gimbal.Attitude
+  to: mavsdk.rpc.gimbal.EulerAngle
+  kind: has_one
+  via: euler_angle_north
+- from: mavsdk.rpc.gimbal.Attitude
+  to: mavsdk.rpc.gimbal.Quaternion
+  kind: has_one
+  via: quaternion_forward
+- from: mavsdk.rpc.gimbal.Attitude
+  to: mavsdk.rpc.gimbal.Quaternion
+  kind: has_one
+  via: quaternion_north
+- from: mavsdk.rpc.gimbal.GimbalList
+  to: mavsdk.rpc.gimbal.GimbalItem
+  kind: has_many
+  via: gimbals
+- from: mavsdk.rpc.mission.MissionPlan
+  to: mavsdk.rpc.mission.MissionItem
+  kind: has_many
+  via: mission_items
+- from: mavsdk.rpc.mission.ProgressDataOrMission
+  to: mavsdk.rpc.mission.MissionPlan
+  kind: has_one
+  via: mission_plan
+- from: mavsdk.rpc.mission_raw.MissionImportData
+  to: mavsdk.rpc.mission_raw.MissionItem
+  kind: has_many
+  via: geofence_items
+- from: mavsdk.rpc.mission_raw.MissionImportData
+  to: mavsdk.rpc.mission_raw.MissionItem
+  kind: has_many
+  via: mission_items
+- from: mavsdk.rpc.mission_raw.MissionImportData
+  to: mavsdk.rpc.mission_raw.MissionItem
+  kind: has_many
+  via: rally_items
+- from: mavsdk.rpc.mission_raw.MissionPlan
+  to: mavsdk.rpc.mission_raw.MissionItem
+  kind: has_many
+  via: mission_items
+- from: mavsdk.rpc.mission_raw_server.MissionPlan
+  to: mavsdk.rpc.mission_raw_server.MissionItem
+  kind: has_many
+  via: mission_items
+- from: mavsdk.rpc.mocap.AttitudePositionMocap
+  to: mavsdk.rpc.mocap.Covariance
+  kind: has_one
+  via: pose_covariance
+- from: mavsdk.rpc.mocap.AttitudePositionMocap
+  to: mavsdk.rpc.mocap.PositionBody
+  kind: has_one
+  via: position_body
+- from: mavsdk.rpc.mocap.AttitudePositionMocap
+  to: mavsdk.rpc.mocap.Quaternion
+  kind: has_one
+  via: q
+- from: mavsdk.rpc.mocap.Odometry
+  to: mavsdk.rpc.mocap.AngularVelocityBody
+  kind: has_one
+  via: angular_velocity_body
+- from: mavsdk.rpc.mocap.Odometry
+  to: mavsdk.rpc.mocap.Covariance
+  kind: has_one
+  via: pose_covariance
+- from: mavsdk.rpc.mocap.Odometry
+  to: mavsdk.rpc.mocap.PositionBody
+  kind: has_one
+  via: position_body
+- from: mavsdk.rpc.mocap.Odometry
+  to: mavsdk.rpc.mocap.Quaternion
+  kind: has_one
+  via: q
+- from: mavsdk.rpc.mocap.Odometry
+  to: mavsdk.rpc.mocap.SpeedBody
+  kind: has_one
+  via: speed_body
+- from: mavsdk.rpc.mocap.Odometry
+  to: mavsdk.rpc.mocap.Covariance
+  kind: has_one
+  via: velocity_covariance
+- from: mavsdk.rpc.mocap.VisionPositionEstimate
+  to: mavsdk.rpc.mocap.AngleBody
+  kind: has_one
+  via: angle_body
+- from: mavsdk.rpc.mocap.VisionPositionEstimate
+  to: mavsdk.rpc.mocap.Covariance
+  kind: has_one
+  via: pose_covariance
+- from: mavsdk.rpc.mocap.VisionPositionEstimate
+  to: mavsdk.rpc.mocap.PositionBody
+  kind: has_one
+  via: position_body
+- from: mavsdk.rpc.mocap.VisionSpeedEstimate
+  to: mavsdk.rpc.mocap.Covariance
+  kind: has_one
+  via: speed_covariance
+- from: mavsdk.rpc.mocap.VisionSpeedEstimate
+  to: mavsdk.rpc.mocap.SpeedNed
+  kind: has_one
+  via: speed_ned
+- from: mavsdk.rpc.offboard.ActuatorControl
+  to: mavsdk.rpc.offboard.ActuatorControlGroup
+  kind: has_many
+  via: groups
+- from: mavsdk.rpc.param.AllParams
+  to: mavsdk.rpc.param.CustomParam
+  kind: has_many
+  via: custom_params
+- from: mavsdk.rpc.param.AllParams
+  to: mavsdk.rpc.param.FloatParam
+  kind: has_many
+  via: float_params
+- from: mavsdk.rpc.param.AllParams
+  to: mavsdk.rpc.param.IntParam
+  kind: has_many
+  via: int_params
+- from: mavsdk.rpc.param_server.AllParams
+  to: mavsdk.rpc.param_server.CustomParam
+  kind: has_many
+  via: custom_params
+- from: mavsdk.rpc.param_server.AllParams
+  to: mavsdk.rpc.param_server.FloatParam
+  kind: has_many
+  via: float_params
+- from: mavsdk.rpc.param_server.AllParams
+  to: mavsdk.rpc.param_server.IntParam
+  kind: has_many
+  via: int_params
+- from: mavsdk.rpc.telemetry.DistanceSensor
+  to: mavsdk.rpc.telemetry.EulerAngle
+  kind: has_one
+  via: orientation
+- from: mavsdk.rpc.telemetry.HomePosition
+  to: mavsdk.rpc.telemetry.Quaternion
+  kind: has_one
+  via: q
+- from: mavsdk.rpc.telemetry.Imu
+  to: mavsdk.rpc.telemetry.AccelerationFrd
+  kind: has_one
+  via: acceleration_frd
+- from: mavsdk.rpc.telemetry.Imu
+  to: mavsdk.rpc.telemetry.AngularVelocityFrd
+  kind: has_one
+  via: angular_velocity_frd
+- from: mavsdk.rpc.telemetry.Imu
+  to: mavsdk.rpc.telemetry.MagneticFieldFrd
+  kind: has_one
+  via: magnetic_field_frd
+- from: mavsdk.rpc.telemetry.Odometry
+  to: mavsdk.rpc.telemetry.AngularVelocityBody
+  kind: has_one
+  via: angular_velocity_body
+- from: mavsdk.rpc.telemetry.Odometry
+  to: mavsdk.rpc.telemetry.Covariance
+  kind: has_one
+  via: pose_covariance
+- from: mavsdk.rpc.telemetry.Odometry
+  to: mavsdk.rpc.telemetry.PositionBody
+  kind: has_one
+  via: position_body
+- from: mavsdk.rpc.telemetry.Odometry
+  to: mavsdk.rpc.telemetry.Quaternion
+  kind: has_one
+  via: q
+- from: mavsdk.rpc.telemetry.Odometry
+  to: mavsdk.rpc.telemetry.VelocityBody
+  kind: has_one
+  via: velocity_body
+- from: mavsdk.rpc.telemetry.Odometry
+  to: mavsdk.rpc.telemetry.Covariance
+  kind: has_one
+  via: velocity_covariance
+- from: mavsdk.rpc.telemetry.PositionVelocityNed
+  to: mavsdk.rpc.telemetry.PositionNed
+  kind: has_one
+  via: position
+- from: mavsdk.rpc.telemetry.PositionVelocityNed
+  to: mavsdk.rpc.telemetry.VelocityNed
+  kind: has_one
+  via: velocity
+- from: mavsdk.rpc.telemetry_server.Imu
+  to: mavsdk.rpc.telemetry_server.AccelerationFrd
+  kind: has_one
+  via: acceleration_frd
+- from: mavsdk.rpc.telemetry_server.Imu
+  to: mavsdk.rpc.telemetry_server.AngularVelocityFrd
+  kind: has_one
+  via: angular_velocity_frd
+- from: mavsdk.rpc.telemetry_server.Imu
+  to: mavsdk.rpc.telemetry_server.MagneticFieldFrd
+  kind: has_one
+  via: magnetic_field_frd
+- from: mavsdk.rpc.telemetry_server.Odometry
+  to: mavsdk.rpc.telemetry_server.AngularVelocityBody
+  kind: has_one
+  via: angular_velocity_body
+- from: mavsdk.rpc.telemetry_server.Odometry
+  to: mavsdk.rpc.telemetry_server.Covariance
+  kind: has_one
+  via: pose_covariance
+- from: mavsdk.rpc.telemetry_server.Odometry
+  to: mavsdk.rpc.telemetry_server.PositionBody
+  kind: has_one
+  via: position_body
+- from: mavsdk.rpc.telemetry_server.Odometry
+  to: mavsdk.rpc.telemetry_server.Quaternion
+  kind: has_one
+  via: q
+- from: mavsdk.rpc.telemetry_server.Odometry
+  to: mavsdk.rpc.telemetry_server.VelocityBody
+  kind: has_one
+  via: velocity_body
+- from: mavsdk.rpc.telemetry_server.Odometry
+  to: mavsdk.rpc.telemetry_server.Covariance
+  kind: has_one
+  via: velocity_covariance
+- from: mavsdk.rpc.telemetry_server.PositionVelocityNed
+  to: mavsdk.rpc.telemetry_server.PositionNed
+  kind: has_one
+  via: position
+- from: mavsdk.rpc.telemetry_server.PositionVelocityNed
+  to: mavsdk.rpc.telemetry_server.VelocityNed
+  kind: has_one
+  via: velocity
+- from: mavsdk.rpc.winch.Status
+  to: mavsdk.rpc.winch.StatusFlags
+  kind: has_one
+  via: status_flags
+nested_message_note: 983 top-level messages plus 459 nested ones (1,442 total) across the 39 files. The graph below
+  covers the top-level messages; nested types are not separately addressable.

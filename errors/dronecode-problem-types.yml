@@ -1,0 +1,1244 @@
+generated: '2026-09-06'
+method: derived
+source: derived from the 36 *Result enums in the verbatim MAVSDK protobuf contracts under grpc/ (github.com/mavlink/MAVSDK-Proto
+  @ 4fbf5ce1)
+provider: Dronecode Foundation
+providerId: dronecode
+format: protobuf-enum
+format_note: NOT RFC 9457. MAVSDK is a gRPC API and does not use HTTP problem+json. Every fallible RPC returns a
+  service-specific <Service>Result message carrying an enum Result plus a free-text result_str; the gRPC status
+  is almost always OK even when the operation failed, so a client MUST read the Result enum rather than the transport
+  status. There is no cross-service error taxonomy — each of the 36 services defines its own enum, and identical
+  symbols (RESULT_TIMEOUT, RESULT_NO_SYSTEM, RESULT_BUSY) are distinct types with distinct integer values per service.
+envelope:
+  field: <service>_result
+  enum_field: result
+  human_field: result_str
+  example_message: 'mavsdk.rpc.action.ActionResult { result: RESULT_COMMAND_DENIED, result_str: "..." }'
+service_count: 36
+code_count: 327
+distinct_symbol_count: 76
+most_common_symbols:
+- - RESULT_SUCCESS
+  - 36
+- - RESULT_UNKNOWN
+  - 35
+- - RESULT_NO_SYSTEM
+  - 34
+- - RESULT_TIMEOUT
+  - 27
+- - RESULT_BUSY
+  - 21
+- - RESULT_CONNECTION_ERROR
+  - 20
+- - RESULT_UNSUPPORTED
+  - 16
+- - RESULT_COMMAND_DENIED
+  - 10
+- - RESULT_ERROR
+  - 10
+- - RESULT_FAILED
+  - 9
+- - RESULT_INVALID_ARGUMENT
+  - 8
+- - RESULT_NEXT
+  - 7
+docs: https://mavsdk.mavlink.io/main/en/cpp/api_reference/
+services:
+- service: ActionServerService
+  package: mavsdk.rpc.action_server
+  result_message: ActionServerResult
+  file: dronecode-mavsdk-action-server.proto
+  code_count: 13
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request was successful
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system is connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_COMMAND_DENIED
+    value: 5
+    meaning: Command refused by vehicle
+  - code: RESULT_COMMAND_DENIED_LANDED_STATE_UNKNOWN
+    value: 6
+    meaning: Command refused because landed state is unknown
+  - code: RESULT_COMMAND_DENIED_NOT_LANDED
+    value: 7
+    meaning: Command refused because vehicle not landed
+  - code: RESULT_TIMEOUT
+    value: 8
+    meaning: Request timed out
+  - code: RESULT_VTOL_TRANSITION_SUPPORT_UNKNOWN
+    value: 9
+    meaning: Hybrid/VTOL transition support is unknown
+  - code: RESULT_NO_VTOL_TRANSITION_SUPPORT
+    value: 10
+    meaning: Vehicle does not support hybrid/VTOL transitions
+  - code: RESULT_PARAMETER_ERROR
+    value: 11
+    meaning: Error getting or setting parameter
+  - code: RESULT_NEXT
+    value: 12
+    meaning: Intermediate message showing progress or instructions on the next steps
+- service: ActionService
+  package: mavsdk.rpc.action
+  result_message: ActionResult
+  file: dronecode-mavsdk-action.proto
+  code_count: 15
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request was successful
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system is connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_COMMAND_DENIED
+    value: 5
+    meaning: Command refused by vehicle
+  - code: RESULT_COMMAND_DENIED_LANDED_STATE_UNKNOWN
+    value: 6
+    meaning: Command refused because landed state is unknown
+  - code: RESULT_COMMAND_DENIED_NOT_LANDED
+    value: 7
+    meaning: Command refused because vehicle not landed
+  - code: RESULT_TIMEOUT
+    value: 8
+    meaning: Request timed out
+  - code: RESULT_VTOL_TRANSITION_SUPPORT_UNKNOWN
+    value: 9
+    meaning: Hybrid/VTOL transition support is unknown
+  - code: RESULT_NO_VTOL_TRANSITION_SUPPORT
+    value: 10
+    meaning: Vehicle does not support hybrid/VTOL transitions
+  - code: RESULT_PARAMETER_ERROR
+    value: 11
+    meaning: Error getting or setting parameter
+  - code: RESULT_UNSUPPORTED
+    value: 12
+    meaning: Action not supported
+  - code: RESULT_FAILED
+    value: 13
+    meaning: Action failed
+  - code: RESULT_INVALID_ARGUMENT
+    value: 14
+    meaning: Invalid argument
+- service: ArmAuthorizerServerService
+  package: mavsdk.rpc.arm_authorizer_server
+  result_message: ArmAuthorizerServerResult
+  file: dronecode-mavsdk-arm-authorizer-server.proto
+  code_count: 3
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Command accepted
+  - code: RESULT_FAILED
+    value: 2
+    meaning: Command failed
+- service: CalibrationService
+  package: mavsdk.rpc.calibration
+  result_message: CalibrationResult
+  file: dronecode-mavsdk-calibration.proto
+  code_count: 12
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: The calibration succeeded
+  - code: RESULT_NEXT
+    value: 2
+    meaning: Intermediate message showing progress or instructions on the next steps
+  - code: RESULT_FAILED
+    value: 3
+    meaning: Calibration failed
+  - code: RESULT_NO_SYSTEM
+    value: 4
+    meaning: No system is connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 5
+    meaning: Connection error
+  - code: RESULT_BUSY
+    value: 6
+    meaning: Vehicle is busy
+  - code: RESULT_COMMAND_DENIED
+    value: 7
+    meaning: Command refused by vehicle
+  - code: RESULT_TIMEOUT
+    value: 8
+    meaning: Command timed out
+  - code: RESULT_CANCELLED
+    value: 9
+    meaning: Calibration process was cancelled
+  - code: RESULT_FAILED_ARMED
+    value: 10
+    meaning: Calibration process failed since the vehicle is armed
+  - code: RESULT_UNSUPPORTED
+    value: 11
+    meaning: Functionality not supported
+- service: CameraServerService
+  package: mavsdk.rpc.camera_server
+  result_message: CameraServerResult
+  file: dronecode-mavsdk-camera-server.proto
+  code_count: 9
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Command executed successfully
+  - code: RESULT_IN_PROGRESS
+    value: 2
+    meaning: Command in progress
+  - code: RESULT_BUSY
+    value: 3
+    meaning: Camera is busy and rejected command
+  - code: RESULT_DENIED
+    value: 4
+    meaning: Camera denied the command
+  - code: RESULT_ERROR
+    value: 5
+    meaning: An error has occurred while executing the command
+  - code: RESULT_TIMEOUT
+    value: 6
+    meaning: Command timed out
+  - code: RESULT_WRONG_ARGUMENT
+    value: 7
+    meaning: Command has wrong argument(s)
+  - code: RESULT_NO_SYSTEM
+    value: 8
+    meaning: No system connected
+- service: CameraService
+  package: mavsdk.rpc.camera
+  result_message: CameraResult
+  file: dronecode-mavsdk-camera.proto
+  code_count: 13
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Command executed successfully
+  - code: RESULT_IN_PROGRESS
+    value: 2
+    meaning: Command in progress
+  - code: RESULT_BUSY
+    value: 3
+    meaning: Camera is busy and rejected command
+  - code: RESULT_DENIED
+    value: 4
+    meaning: Camera denied the command
+  - code: RESULT_ERROR
+    value: 5
+    meaning: An error has occurred while executing the command
+  - code: RESULT_TIMEOUT
+    value: 6
+    meaning: Command timed out
+  - code: RESULT_WRONG_ARGUMENT
+    value: 7
+    meaning: Command has wrong argument(s)
+  - code: RESULT_NO_SYSTEM
+    value: 8
+    meaning: No system connected
+  - code: RESULT_PROTOCOL_UNSUPPORTED
+    value: 9
+    meaning: Definition file protocol not supported
+  - code: RESULT_UNAVAILABLE
+    value: 10
+    meaning: Not available (yet)
+  - code: RESULT_CAMERA_ID_INVALID
+    value: 11
+    meaning: Camera with camera ID not found
+  - code: RESULT_ACTION_UNSUPPORTED
+    value: 12
+    meaning: Camera action not supported
+- service: ComponentMetadataService
+  package: mavsdk.rpc.component_metadata
+  result_message: ComponentMetadataResult
+  file: dronecode-mavsdk-component-metadata.proto
+  code_count: 9
+  codes:
+  - code: RESULT_SUCCESS
+    value: 0
+    meaning: Success
+  - code: RESULT_NOT_AVAILABLE
+    value: 1
+    meaning: Not available
+  - code: RESULT_CONNECTION_ERROR
+    value: 2
+    meaning: Connection error
+  - code: RESULT_UNSUPPORTED
+    value: 3
+    meaning: Unsupported
+  - code: RESULT_DENIED
+    value: 4
+    meaning: Denied
+  - code: RESULT_FAILED
+    value: 5
+    meaning: Failed
+  - code: RESULT_TIMEOUT
+    value: 6
+    meaning: Timeout
+  - code: RESULT_NO_SYSTEM
+    value: 7
+    meaning: No system
+  - code: RESULT_NOT_REQUESTED
+    value: 8
+    meaning: Not requested
+- service: EventsService
+  package: mavsdk.rpc.events
+  result_message: EventsResult
+  file: dronecode-mavsdk-events.proto
+  code_count: 9
+  codes:
+  - code: RESULT_SUCCESS
+    value: 0
+    meaning: Successful result
+  - code: RESULT_NOT_AVAILABLE
+    value: 1
+    meaning: Not available
+  - code: RESULT_CONNECTION_ERROR
+    value: 2
+    meaning: Connection error
+  - code: RESULT_UNSUPPORTED
+    value: 3
+    meaning: Unsupported
+  - code: RESULT_DENIED
+    value: 4
+    meaning: Denied
+  - code: RESULT_FAILED
+    value: 5
+    meaning: Failed
+  - code: RESULT_TIMEOUT
+    value: 6
+    meaning: Timeout
+  - code: RESULT_NO_SYSTEM
+    value: 7
+    meaning: No system available
+  - code: RESULT_UNKNOWN
+    value: 8
+    meaning: Unknown result
+- service: FailureService
+  package: mavsdk.rpc.failure
+  result_message: FailureResult
+  file: dronecode-mavsdk-failure.proto
+  code_count: 8
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system is connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_UNSUPPORTED
+    value: 4
+    meaning: Failure not supported
+  - code: RESULT_DENIED
+    value: 5
+    meaning: Failure injection denied
+  - code: RESULT_DISABLED
+    value: 6
+    meaning: Failure injection is disabled
+  - code: RESULT_TIMEOUT
+    value: 7
+    meaning: Request timed out
+- service: FollowMeService
+  package: mavsdk.rpc.follow_me
+  result_message: FollowMeResult
+  file: dronecode-mavsdk-follow-me.proto
+  code_count: 9
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_COMMAND_DENIED
+    value: 5
+    meaning: Command denied
+  - code: RESULT_TIMEOUT
+    value: 6
+    meaning: Request timed out
+  - code: RESULT_NOT_ACTIVE
+    value: 7
+    meaning: FollowMe is not active
+  - code: RESULT_SET_CONFIG_FAILED
+    value: 8
+    meaning: Failed to set FollowMe configuration
+- service: FtpServerService
+  package: mavsdk.rpc.ftp_server
+  result_message: FtpServerResult
+  file: dronecode-mavsdk-ftp-server.proto
+  code_count: 4
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_DOES_NOT_EXIST
+    value: 2
+    meaning: Directory does not exist
+  - code: RESULT_BUSY
+    value: 3
+    meaning: Operations in progress
+- service: FtpService
+  package: mavsdk.rpc.ftp
+  result_message: FtpResult
+  file: dronecode-mavsdk-ftp.proto
+  code_count: 13
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Success
+  - code: RESULT_NEXT
+    value: 2
+    meaning: Intermediate message showing progress
+  - code: RESULT_TIMEOUT
+    value: 3
+    meaning: Timeout
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Operation is already in progress
+  - code: RESULT_FILE_IO_ERROR
+    value: 5
+    meaning: File IO operation error
+  - code: RESULT_FILE_EXISTS
+    value: 6
+    meaning: File exists already
+  - code: RESULT_FILE_DOES_NOT_EXIST
+    value: 7
+    meaning: File does not exist
+  - code: RESULT_FILE_PROTECTED
+    value: 8
+    meaning: File is write protected
+  - code: RESULT_INVALID_PARAMETER
+    value: 9
+    meaning: Invalid parameter
+  - code: RESULT_UNSUPPORTED
+    value: 10
+    meaning: Unsupported command
+  - code: RESULT_PROTOCOL_ERROR
+    value: 11
+    meaning: General protocol error
+  - code: RESULT_NO_SYSTEM
+    value: 12
+    meaning: No system connected
+- service: GeofenceService
+  package: mavsdk.rpc.geofence
+  result_message: GeofenceResult
+  file: dronecode-mavsdk-geofence.proto
+  code_count: 8
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_ERROR
+    value: 2
+    meaning: Error
+  - code: RESULT_TOO_MANY_GEOFENCE_ITEMS
+    value: 3
+    meaning: Too many objects in the geofence
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_TIMEOUT
+    value: 5
+    meaning: Request timed out
+  - code: RESULT_INVALID_ARGUMENT
+    value: 6
+    meaning: Invalid argument
+  - code: RESULT_NO_SYSTEM
+    value: 7
+    meaning: No system connected
+- service: GimbalService
+  package: mavsdk.rpc.gimbal
+  result_message: GimbalResult
+  file: dronecode-mavsdk-gimbal.proto
+  code_count: 7
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Command was accepted
+  - code: RESULT_ERROR
+    value: 2
+    meaning: Error occurred sending the command
+  - code: RESULT_TIMEOUT
+    value: 3
+    meaning: Command timed out
+  - code: RESULT_UNSUPPORTED
+    value: 4
+    meaning: Functionality not supported
+  - code: RESULT_NO_SYSTEM
+    value: 5
+    meaning: No system connected
+  - code: RESULT_INVALID_ARGUMENT
+    value: 6
+    meaning: Invalid argument
+- service: GripperService
+  package: mavsdk.rpc.gripper
+  result_message: GripperResult
+  file: dronecode-mavsdk-gripper.proto
+  code_count: 7
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request was successful
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system is connected
+  - code: RESULT_BUSY
+    value: 3
+    meaning: Temporarily rejected
+  - code: RESULT_TIMEOUT
+    value: 4
+    meaning: Request timed out
+  - code: RESULT_UNSUPPORTED
+    value: 5
+    meaning: Action not supported
+  - code: RESULT_FAILED
+    value: 6
+    meaning: Action failed
+- service: InfoService
+  package: mavsdk.rpc.info
+  result_message: InfoResult
+  file: dronecode-mavsdk-info.proto
+  code_count: 4
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_INFORMATION_NOT_RECEIVED_YET
+    value: 2
+    meaning: Information has not been received yet
+  - code: RESULT_NO_SYSTEM
+    value: 3
+    meaning: No system is connected
+- service: LogFilesService
+  package: mavsdk.rpc.log_files
+  result_message: LogFilesResult
+  file: dronecode-mavsdk-log-files.proto
+  code_count: 8
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_NEXT
+    value: 2
+    meaning: Progress update
+  - code: RESULT_NO_LOGFILES
+    value: 3
+    meaning: No log files found
+  - code: RESULT_TIMEOUT
+    value: 4
+    meaning: A timeout happened
+  - code: RESULT_INVALID_ARGUMENT
+    value: 5
+    meaning: Invalid argument
+  - code: RESULT_FILE_OPEN_FAILED
+    value: 6
+    meaning: File open failed
+  - code: RESULT_NO_SYSTEM
+    value: 7
+    meaning: No system is connected
+- service: LogStreamingService
+  package: mavsdk.rpc.log_streaming
+  result_message: LogStreamingResult
+  file: dronecode-mavsdk-log-streaming.proto
+  code_count: 8
+  codes:
+  - code: RESULT_SUCCESS
+    value: 0
+    meaning: Request succeeded
+  - code: RESULT_NO_SYSTEM
+    value: 1
+    meaning: No system connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 2
+    meaning: Connection error
+  - code: RESULT_BUSY
+    value: 3
+    meaning: System busy
+  - code: RESULT_COMMAND_DENIED
+    value: 4
+    meaning: Command denied
+  - code: RESULT_TIMEOUT
+    value: 5
+    meaning: Timeout
+  - code: RESULT_UNSUPPORTED
+    value: 6
+    meaning: Unsupported
+  - code: RESULT_UNKNOWN
+    value: 7
+    meaning: Unknown error
+- service: ManualControlService
+  package: mavsdk.rpc.manual_control
+  result_message: ManualControlResult
+  file: dronecode-mavsdk-manual-control.proto
+  code_count: 9
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request was successful
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system is connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_COMMAND_DENIED
+    value: 5
+    meaning: Command refused by vehicle
+  - code: RESULT_TIMEOUT
+    value: 6
+    meaning: Request timed out
+  - code: RESULT_INPUT_OUT_OF_RANGE
+    value: 7
+    meaning: Input out of range
+  - code: RESULT_INPUT_NOT_SET
+    value: 8
+    meaning: No Input set
+- service: MavlinkDirectServerService
+  package: mavsdk.rpc.mavlink_direct_server
+  result_message: MavlinkDirectServerResult
+  file: dronecode-mavsdk-mavlink-direct-server.proto
+  code_count: 8
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_ERROR
+    value: 2
+    meaning: Error
+  - code: RESULT_INVALID_MESSAGE
+    value: 3
+    meaning: Invalid MAVLink message
+  - code: RESULT_INVALID_FIELD
+    value: 4
+    meaning: Invalid field name or value
+  - code: RESULT_CONNECTION_ERROR
+    value: 5
+    meaning: Connection error
+  - code: RESULT_NO_SYSTEM
+    value: 6
+    meaning: No system connected
+  - code: RESULT_TIMEOUT
+    value: 7
+    meaning: Request timed out
+- service: MavlinkDirectService
+  package: mavsdk.rpc.mavlink_direct
+  result_message: MavlinkDirectResult
+  file: dronecode-mavsdk-mavlink-direct.proto
+  code_count: 8
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_ERROR
+    value: 2
+    meaning: Error
+  - code: RESULT_INVALID_MESSAGE
+    value: 3
+    meaning: Invalid MAVLink message
+  - code: RESULT_INVALID_FIELD
+    value: 4
+    meaning: Invalid field name or value
+  - code: RESULT_CONNECTION_ERROR
+    value: 5
+    meaning: Connection error
+  - code: RESULT_NO_SYSTEM
+    value: 6
+    meaning: No system connected
+  - code: RESULT_TIMEOUT
+    value: 7
+    meaning: Request timed out
+- service: MissionRawServerService
+  package: mavsdk.rpc.mission_raw_server
+  result_message: MissionRawServerResult
+  file: dronecode-mavsdk-mission-raw-server.proto
+  code_count: 13
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_ERROR
+    value: 2
+    meaning: Error
+  - code: RESULT_TOO_MANY_MISSION_ITEMS
+    value: 3
+    meaning: Too many mission items in the mission
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_TIMEOUT
+    value: 5
+    meaning: Request timed out
+  - code: RESULT_INVALID_ARGUMENT
+    value: 6
+    meaning: Invalid argument
+  - code: RESULT_UNSUPPORTED
+    value: 7
+    meaning: Mission downloaded from the system is not supported
+  - code: RESULT_NO_MISSION_AVAILABLE
+    value: 8
+    meaning: No mission available on the system
+  - code: RESULT_UNSUPPORTED_MISSION_CMD
+    value: 11
+    meaning: Unsupported mission command
+  - code: RESULT_TRANSFER_CANCELLED
+    value: 12
+    meaning: Mission transfer (upload or download) has been cancelled
+  - code: RESULT_NO_SYSTEM
+    value: 13
+    meaning: No system connected
+  - code: RESULT_NEXT
+    value: 14
+    meaning: Intermediate message showing progress or instructions on the next steps
+- service: MissionRawService
+  package: mavsdk.rpc.mission_raw
+  result_message: MissionRawResult
+  file: dronecode-mavsdk-mission-raw.proto
+  code_count: 22
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_ERROR
+    value: 2
+    meaning: Error
+  - code: RESULT_TOO_MANY_MISSION_ITEMS
+    value: 3
+    meaning: Too many mission items in the mission
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_TIMEOUT
+    value: 5
+    meaning: Request timed out
+  - code: RESULT_INVALID_ARGUMENT
+    value: 6
+    meaning: Invalid argument
+  - code: RESULT_UNSUPPORTED
+    value: 7
+    meaning: Mission downloaded from the system is not supported
+  - code: RESULT_NO_MISSION_AVAILABLE
+    value: 8
+    meaning: No mission available on the system
+  - code: RESULT_TRANSFER_CANCELLED
+    value: 9
+    meaning: Mission transfer (upload or download) has been cancelled
+  - code: RESULT_FAILED_TO_OPEN_QGC_PLAN
+    value: 10
+    meaning: Failed to open the QGroundControl plan
+  - code: RESULT_FAILED_TO_PARSE_QGC_PLAN
+    value: 11
+    meaning: Failed to parse the QGroundControl plan
+  - code: RESULT_NO_SYSTEM
+    value: 12
+    meaning: No system connected
+  - code: RESULT_DENIED
+    value: 13
+    meaning: Request denied
+  - code: RESULT_MISSION_TYPE_NOT_CONSISTENT
+    value: 14
+    meaning: Mission type is not consistent
+  - code: RESULT_INVALID_SEQUENCE
+    value: 15
+    meaning: The mission item sequences are not increasing correctly
+  - code: RESULT_CURRENT_INVALID
+    value: 16
+    meaning: The current item is not set correctly
+  - code: RESULT_PROTOCOL_ERROR
+    value: 17
+    meaning: There was a protocol error
+  - code: RESULT_INT_MESSAGES_NOT_SUPPORTED
+    value: 18
+    meaning: The system does not support the MISSION_INT protocol
+  - code: RESULT_FAILED_TO_OPEN_MISSION_PLANNER_PLAN
+    value: 19
+    meaning: Failed to open the Mission Planner plan
+  - code: RESULT_FAILED_TO_PARSE_MISSION_PLANNER_PLAN
+    value: 20
+    meaning: Failed to parse the Mission Planner plan
+  - code: RESULT_NEXT
+    value: 21
+    meaning: Intermediate message showing progress
+- service: MissionService
+  package: mavsdk.rpc.mission
+  result_message: MissionResult
+  file: dronecode-mavsdk-mission.proto
+  code_count: 16
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_ERROR
+    value: 2
+    meaning: Error
+  - code: RESULT_TOO_MANY_MISSION_ITEMS
+    value: 3
+    meaning: Too many mission items in the mission
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_TIMEOUT
+    value: 5
+    meaning: Request timed out
+  - code: RESULT_INVALID_ARGUMENT
+    value: 6
+    meaning: Invalid argument
+  - code: RESULT_UNSUPPORTED
+    value: 7
+    meaning: Mission downloaded from the system is not supported
+  - code: RESULT_NO_MISSION_AVAILABLE
+    value: 8
+    meaning: No mission available on the system
+  - code: RESULT_UNSUPPORTED_MISSION_CMD
+    value: 11
+    meaning: Unsupported mission command
+  - code: RESULT_TRANSFER_CANCELLED
+    value: 12
+    meaning: Mission transfer (upload or download) has been cancelled
+  - code: RESULT_NO_SYSTEM
+    value: 13
+    meaning: No system connected
+  - code: RESULT_NEXT
+    value: 14
+    meaning: Intermediate message showing progress
+  - code: RESULT_DENIED
+    value: 15
+    meaning: Request denied
+  - code: RESULT_PROTOCOL_ERROR
+    value: 16
+    meaning: There was a protocol error
+  - code: RESULT_INT_MESSAGES_NOT_SUPPORTED
+    value: 17
+    meaning: The system does not support the MISSION_INT protocol
+- service: MocapService
+  package: mavsdk.rpc.mocap
+  result_message: MocapResult
+  file: dronecode-mavsdk-mocap.proto
+  code_count: 6
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown error
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system is connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_INVALID_REQUEST_DATA
+    value: 4
+    meaning: Invalid request data
+  - code: RESULT_UNSUPPORTED
+    value: 5
+    meaning: Function unsupported
+- service: OffboardService
+  package: mavsdk.rpc.offboard
+  result_message: OffboardResult
+  file: dronecode-mavsdk-offboard.proto
+  code_count: 9
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system is connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_COMMAND_DENIED
+    value: 5
+    meaning: Command denied
+  - code: RESULT_TIMEOUT
+    value: 6
+    meaning: Request timed out
+  - code: RESULT_NO_SETPOINT_SET
+    value: 7
+    meaning: Cannot start without setpoint set
+  - code: RESULT_FAILED
+    value: 8
+    meaning: Request failed
+- service: ParamServerService
+  package: mavsdk.rpc.param_server
+  result_message: ParamServerResult
+  file: dronecode-mavsdk-param-server.proto
+  code_count: 8
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_NOT_FOUND
+    value: 2
+    meaning: Not Found
+  - code: RESULT_WRONG_TYPE
+    value: 3
+    meaning: Wrong type
+  - code: RESULT_PARAM_NAME_TOO_LONG
+    value: 4
+    meaning: Parameter name too long (> 16)
+  - code: RESULT_NO_SYSTEM
+    value: 5
+    meaning: No system available
+  - code: RESULT_PARAM_VALUE_TOO_LONG
+    value: 6
+    meaning: Parameter name too long (> 128)
+  - code: RESULT_PARAM_PROVIDED_TOO_LATE
+    value: 7
+    meaning: New params have to be provided before the param set is locked down
+- service: ParamService
+  package: mavsdk.rpc.param
+  result_message: ParamResult
+  file: dronecode-mavsdk-param.proto
+  code_count: 17
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_TIMEOUT
+    value: 2
+    meaning: Request timed out
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_WRONG_TYPE
+    value: 4
+    meaning: Wrong type
+  - code: RESULT_PARAM_NAME_TOO_LONG
+    value: 5
+    meaning: Parameter name too long (> 16)
+  - code: RESULT_NO_SYSTEM
+    value: 6
+    meaning: No system connected
+  - code: RESULT_PARAM_VALUE_TOO_LONG
+    value: 7
+    meaning: Param value too long (> 128)
+  - code: RESULT_FAILED
+    value: 8
+    meaning: Operation failed.
+  - code: RESULT_DOES_NOT_EXIST
+    value: 9
+    meaning: Parameter does not exist
+  - code: RESULT_VALUE_OUT_OF_RANGE
+    value: 10
+    meaning: Parameter value does not fit within accepted range
+  - code: RESULT_PERMISSION_DENIED
+    value: 11
+    meaning: Caller is not permitted to set the value of this parameter
+  - code: RESULT_COMPONENT_NOT_FOUND
+    value: 12
+    meaning: Unknown component specified
+  - code: RESULT_READ_ONLY
+    value: 13
+    meaning: Parameter is read-only
+  - code: RESULT_TYPE_UNSUPPORTED
+    value: 14
+    meaning: Parameter data type is not supported by flight stack
+  - code: RESULT_TYPE_MISMATCH
+    value: 15
+    meaning: Parameter type does not match expected type
+  - code: RESULT_READ_FAIL
+    value: 16
+    meaning: Parameter exists but reading failed
+- service: RtkService
+  package: mavsdk.rpc.rtk
+  result_message: RtkResult
+  file: dronecode-mavsdk-rtk.proto
+  code_count: 5
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_TOO_LONG
+    value: 2
+    meaning: Passed data is too long
+  - code: RESULT_NO_SYSTEM
+    value: 5
+    meaning: No system connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 6
+    meaning: Connection error
+- service: ServerUtilityService
+  package: mavsdk.rpc.server_utility
+  result_message: ServerUtilityResult
+  file: dronecode-mavsdk-server-utility.proto
+  code_count: 5
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system is connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_INVALID_ARGUMENT
+    value: 4
+    meaning: Invalid argument
+- service: ShellService
+  package: mavsdk.rpc.shell
+  result_message: ShellResult
+  file: dronecode-mavsdk-shell.proto
+  code_count: 6
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system is connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_NO_RESPONSE
+    value: 4
+    meaning: Response was not received
+  - code: RESULT_BUSY
+    value: 5
+    meaning: Shell busy (transfer in progress)
+- service: TelemetryServerService
+  package: mavsdk.rpc.telemetry_server
+  result_message: TelemetryServerResult
+  file: dronecode-mavsdk-telemetry-server.proto
+  code_count: 8
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: 'Success: the telemetry command was accepted by the vehicle'
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_COMMAND_DENIED
+    value: 5
+    meaning: Command refused by vehicle
+  - code: RESULT_TIMEOUT
+    value: 6
+    meaning: Request timed out
+  - code: RESULT_UNSUPPORTED
+    value: 7
+    meaning: Request not supported
+- service: TelemetryService
+  package: mavsdk.rpc.telemetry
+  result_message: TelemetryResult
+  file: dronecode-mavsdk-telemetry.proto
+  code_count: 8
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: 'Success: the telemetry command was accepted by the vehicle'
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_COMMAND_DENIED
+    value: 5
+    meaning: Command refused by vehicle
+  - code: RESULT_TIMEOUT
+    value: 6
+    meaning: Request timed out
+  - code: RESULT_UNSUPPORTED
+    value: 7
+    meaning: Request not supported
+- service: TransponderService
+  package: mavsdk.rpc.transponder
+  result_message: TransponderResult
+  file: dronecode-mavsdk-transponder.proto
+  code_count: 7
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: 'Success: the transponder command was accepted by the vehicle'
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system connected
+  - code: RESULT_CONNECTION_ERROR
+    value: 3
+    meaning: Connection error
+  - code: RESULT_BUSY
+    value: 4
+    meaning: Vehicle is busy
+  - code: RESULT_COMMAND_DENIED
+    value: 5
+    meaning: Command refused by vehicle
+  - code: RESULT_TIMEOUT
+    value: 6
+    meaning: Request timed out
+- service: TuneService
+  package: mavsdk.rpc.tune
+  result_message: TuneResult
+  file: dronecode-mavsdk-tune.proto
+  code_count: 6
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request succeeded
+  - code: RESULT_INVALID_TEMPO
+    value: 2
+    meaning: 'Invalid tempo (range: 32 - 255)'
+  - code: RESULT_TUNE_TOO_LONG
+    value: 3
+    meaning: 'Invalid tune: encoded string must be at most 247 chars'
+  - code: RESULT_ERROR
+    value: 4
+    meaning: Failed to send the request
+  - code: RESULT_NO_SYSTEM
+    value: 5
+    meaning: No system connected
+- service: WinchService
+  package: mavsdk.rpc.winch
+  result_message: WinchResult
+  file: dronecode-mavsdk-winch.proto
+  code_count: 7
+  codes:
+  - code: RESULT_UNKNOWN
+    value: 0
+    meaning: Unknown result
+  - code: RESULT_SUCCESS
+    value: 1
+    meaning: Request was successful
+  - code: RESULT_NO_SYSTEM
+    value: 2
+    meaning: No system is connected
+  - code: RESULT_BUSY
+    value: 3
+    meaning: Temporarily rejected
+  - code: RESULT_TIMEOUT
+    value: 4
+    meaning: Request timed out
+  - code: RESULT_UNSUPPORTED
+    value: 5
+    meaning: Action not supported
+  - code: RESULT_FAILED
+    value: 6
+    meaning: Action failed
