@@ -2,13 +2,15 @@
   "repo": "dronecode",
   "feeds": [
     {
+      "source": "https://lists.dronecode.org/groups",
+      "error": "URLError"
+    },
+    {
       "source": "https://dronecode.org/feed/",
       "feed_url": "https://dronecode.org/feed/",
       "title": "",
       "saved": 0,
-      "method": "feed",
-      "nature": "undetermined",
-      "nature_basis": null
+      "method": "feed"
     },
     {
       "source": "https://github.com/PX4",
@@ -18,7 +20,7 @@
       "method": "none"
     }
   ],
-  "fetched": "2026-08-30T22:33:40Z",
+  "fetched": "2026-09-06T19:17:18Z",
   "post_count": 63,
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
