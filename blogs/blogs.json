@@ -3,7 +3,10 @@
   "feeds": [
     {
       "source": "https://lists.dronecode.org/groups",
-      "error": "URLError"
+      "feed_url": "https://lists.dronecode.org/groups",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     },
     {
       "source": "https://dronecode.org/feed/",
@@ -20,7 +23,7 @@
       "method": "none"
     }
   ],
-  "fetched": "2026-09-06T19:17:18Z",
+  "fetched": "2026-09-13T13:00:00Z",
   "post_count": 63,
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
