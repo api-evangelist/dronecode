@@ -11,18 +11,23 @@ description: >-
   open source.
 type: Index
 deliveryModel:
-  model: self-hosted
-  license: BSD-3-Clause
-  open_source: true
-  commercial: false
+  model: saas
+  license_evidence:
+    not_product:
+    - mavlink/mavlink
+    - mavlink/mavsdk
+    - mavlink/mavsdk-proto
+    - px4/px4-autopilot
+  open_source: unknown
+  commercial: true
   callable_host: false
-  label: Self-hosted open source · you run it yourself
-  confidence: high
+  label: Hosted service · you call their endpoint
+  confidence: low
   source:
-    - license
-    - contract
-  generated: '2026-09-06'
-  method: searched
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 accessModel:
   pricing: free
   onboarding: self-service
@@ -48,7 +53,7 @@ tags:
   - Autopilot
   - Aerial Robotics
   - gRPC
-  - Open-Source
+  - Open Source
   - Linux Foundation
 tags_raw:
   - Drones
@@ -61,6 +66,7 @@ tags_raw:
   - gRPC
   - Open Source
   - Linux Foundation
+  - Open-Source
 created: '2026-03-16'
 modified: '2026-09-06'
 url: >-
@@ -172,27 +178,20 @@ apis:
         url: json-schema/dronecode-mavlink-component-metadata-translation.schema.json
       - type: GitHubRepository
         url: https://github.com/mavlink/mavlink
-  - aid: dronecode:dronecode-org-rest
-    name: dronecode.org WordPress REST API
-    description: >-
-      The only HTTP API the Foundation itself hosts, and the one its RFC 9727 /.well-known/api-catalog
-      advertises. The discovery root is anonymous and lists 74 routes across 7 namespaces; the wp/v2
-      content routes are switched off (rest_no_route) and the wp-abilities agent-tool routes require
-      WordPress Application Password authentication (rest_forbidden). Recorded because the provider
-      publishes it, not because it is an engineering surface.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/dronecode.png
-    humanURL: https://dronecode.org/
-    baseURL: https://dronecode.org/wp-json/
+  - aid: dronecode:dronecode-org-website-wordpress-rest
+    name: Dronecode Foundation Website (WordPress REST)
+    description: 'The public WordPress REST API (wp-json) of the Dronecode Foundation website at dronecode.org:
+      the route index of the site''s content management system, catalogued as one site surface rather than
+      as separate APIs.'
+    baseURL: https://dronecode.org/wp-json
     tags:
-      - CMS
-      - WordPress
+    - WordPress
+    x-surface: platform-generated
     properties:
-      - type: APIReference
-        url: https://developer.wordpress.org/rest-api/
-      - type: Authentication
-        url: authentication/dronecode-authentication.yml
-      - type: APICatalog
-        url: well-known/dronecode-api-catalog.json
+    - type: Documentation
+      url: https://dronecode.org/wp-json
+    x-platform: wordpress
+    x-platform-surface: rest
 common:
   - type: Website
     url: https://www.dronecode.org/
