@@ -1,4 +1,4 @@
-# Dronecode Foundation (dronecode)
+# Dronecode Foundation
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,39 +64,132 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The Dronecode Foundation is a vendor-neutral Linux Foundation project for open source drone projects. It hosts PX4 autopilot flight control software and MAVLink communication protocol used worldwide for unmanned aerial vehicles, providing a complete open source platform for drone development.
+The Dronecode Foundation is a vendor-neutral Linux Foundation collaborative project and the home of the open source flight stack the drone industry runs on: PX4 Autopilot, the MAVLink communication protocol, MAVSDK, QGroundControl and the Pixhawk hardware standards. Its machine-readable surface is a gRPC one — MAVSDK-Proto publishes 38 protobuf services and 387 RPCs covering arming, takeoff, missions, geofencing, telemetry, camera, gimbal and parameter control — alongside the MAVLink dialect XML and the component-metadata JSON Schemas that define how vehicles describe themselves. Nothing is hosted: the consumer runs mavsdk_server themselves, and every contract, SDK and firmware is free and open source.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/dronecode/refs/heads/main/apis.yml)
+**Areas:** Drones · UAV · Robotics · MAVLink · PX4 · Autopilot · Aerial Robotics · gRPC · Open Source · Linux Foundation
 
-## Scope
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+## Dronecode Foundation on APIs.io
 
-## Tags:
- - Drones, UAV, Robotics, Linux Foundation
+Everything profiled for Dronecode Foundation is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/dronecode/](https://apis.io/providers/dronecode/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
-- **Created:** 2026-03-16
-- **Modified:** 2026-04-28
+### APIs (4)
 
-## APIs
+- [PX4 Autopilot](https://apis.io/apis/dronecode/dronecode-api/) — PX4 is the open source flight control firmware the Dronecode Foundation stewards — the software running on the vehicle that MAVLink and MAVSDK talk to. It…
+- [MAVSDK gRPC API](https://apis.io/apis/dronecode/mavsdk/) — MAVSDK is the Dronecode Foundation's programmable interface to any MAVLink vehicle, and the only surface in the estate with a full machine-readable…
+- [MAVLink Protocol](https://apis.io/apis/dronecode/mavlink/) — MAVLink is the message-level interoperability standard for drones, and the Dronecode Foundation publishes it. The contract is the dialect XML — 19 files…
+- [Dronecode Foundation Website (WordPress REST)](https://apis.io/apis/dronecode/dronecode-org-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Dronecode Foundation website at dronecode.org: the route index of the site's content management system,…
 
-### Dronecode Foundation API
-API for accessing Dronecode Foundation resources including PX4 autopilot documentation and MAVLink protocol specifications for drone development.
+### Published properties
 
-**Human URL:** [https://docs.px4.io/](https://docs.px4.io/)
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-#### Tags:
- - Drones, UAV
+#### MCP servers (1)
 
-#### Properties
+Model Context Protocol servers that expose the API to agents.
+
+- [MCP candidate (no server published)](https://apis.io/servers/dronecode/mcp-candidate-no-server-published/)
+
+#### JSON Schema (5)
+
+The data models the API reads and writes.
+
+- [Dronecode Mavlink Component Metadata Actuators.Schema](https://apis.io/schemas/dronecode/dronecode-mavlink-component-metadata-actuators.schema/)
+- [Dronecode Mavlink Component Metadata General.Schema](https://apis.io/schemas/dronecode/dronecode-mavlink-component-metadata-general.schema/)
+- [Dronecode Mavlink Component Metadata Parameter.Schema](https://apis.io/schemas/dronecode/dronecode-mavlink-component-metadata-parameter.schema/)
+- [Dronecode Mavlink Component Metadata Peripherals.Schema](https://apis.io/schemas/dronecode/dronecode-mavlink-component-metadata-peripherals.schema/)
+- [Dronecode Mavlink Component Metadata Translation.Schema](https://apis.io/schemas/dronecode/dronecode-mavlink-component-metadata-translation.schema/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Dronecode Authentication](https://apis.io/security/dronecode/dronecode-authentication/)
+- [Dronecode Domain Security](https://apis.io/security/dronecode/dronecode-domain-security/)
+- [Dronecode Vulnerability Disclosure](https://apis.io/security/dronecode/dronecode-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Dronecode Plans Pricing](https://apis.io/plans/dronecode/dronecode-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Dronecode Rate Limits](https://apis.io/rate-limits/dronecode/dronecode-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Dronecode Finops](https://apis.io/finops/dronecode/dronecode-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.dronecode.org/)
 - [Documentation](https://docs.px4.io/)
+- [API reference](https://mavsdk.mavlink.io/main/en/cpp/api_reference/index.html)
+- [Pricing](https://dronecode.org/membership/)
+- [Sign up](https://discuss.px4.io/signup)
+- [Support](https://discuss.px4.io/)
+- [Blog](https://dronecode.org/feed/)
+- [Privacy policy](https://dronecode.org/privacy-policy/)
+- [GitHub](https://github.com/mavlink)
 
-## Common Properties
-- [Documentation](https://docs.px4.io/)
-- [GitHub Repository](https://github.com/PX4)
+## API Evangelist rating
 
-## Maintainers
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
+**Kin Score 46.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 60.7 |
+| Contract quality | 36.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 39.5 |
+| Developer ergonomics | 73.2 |
+| Access clarity | 44.7 |
+
+**Agent readiness 22.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/dronecode/](https://apis.io/providers/dronecode/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Dronecode Foundation: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/dronecode/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
